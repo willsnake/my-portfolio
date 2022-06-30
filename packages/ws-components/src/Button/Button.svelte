@@ -1,11 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { ButtonProps } from "./types";
+  import type { ButtonProps } from "./types";
 
   const dispatch = createEventDispatcher();
 
-  // type $$Props = ButtonProps;
-  interface $$Props extends ButtonProps {}
+  type $$Props = ButtonProps;
 
   export let type = "button";
   export let disabled = false;
