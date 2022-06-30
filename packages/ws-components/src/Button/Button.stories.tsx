@@ -1,8 +1,6 @@
 import Button from './Button.svelte'
 import { VARIANTS_MAP } from './types'
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-// More on argTypes: https://storybook.js.org/docs/svelte/api/argtypes
 export default {
   title: 'Button',
   component: Button,
@@ -10,9 +8,9 @@ export default {
     text: { control: 'text' },
     onClick: { action: 'onClick' },
     disabled: { control: 'boolean' },
-    size: {
+    variant: {
       control: { type: 'select' },
-      options: [Object.keys(VARIANTS_MAP)],
+      options: [...Object.keys(VARIANTS_MAP)],
     },
     type: {
       control: { type: 'select' },
@@ -21,7 +19,7 @@ export default {
   },
 };
 
-// More on component templates: https://storybook.js.org/docs/svelte/writing-stories/introduction#using-args
+
 const Template = (args) => ({
   Component: Button,
   props: args,
@@ -30,26 +28,15 @@ const Template = (args) => ({
   },
 });
 
-// More on args: https://storybook.js.org/docs/svelte/writing-stories/args
+
 export const Primary = Template.bind({});
-// Primary.args = {
-//   primary: true,
-//   label: 'Button',
-// };
+Primary.args = {
+  variant: 'primary',
+  text: 'Primary',
+};
 
-// export const Secondary = Template.bind({});
-// Secondary.args = {
-//   label: 'Button',
-// };
-
-// export const Large = Template.bind({});
-// Large.args = {
-//   size: 'large',
-//   label: 'Button',
-// };
-
-// export const Small = Template.bind({});
-// Small.args = {
-//   size: 'small',
-//   label: 'Button',
-// };
+export const Secondary = Template.bind({});
+Secondary.args = {
+  variant: 'secondary',
+  text: 'Secondary',
+};
