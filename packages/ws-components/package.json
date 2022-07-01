@@ -4,13 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "start-storybook -p 6006",
-    "vite:dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "build-storybook": "build-storybook",
     "check": "svelte-check --tsconfig ./tsconfig.json",
+    "coverage": "vitest run --coverage",
+    "dev": "start-storybook -p 6006",
+    "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "test": "vitest",
+    "vite:dev": "vite"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -24,9 +26,13 @@
     "@storybook/svelte": "^6.5.9",
     "@storybook/testing-library": "^0.0.13",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@testing-library/dom": "^8.14.0",
+    "@testing-library/svelte": "^3.1.3",
+    "@testing-library/user-event": "^14.2.1",
     "@tsconfig/svelte": "^2.0.1",
     "@types/react": "^18.0.14",
     "babel-loader": "^8.2.5",
+    "jsdom": "^20.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "svelte": "^3.48.0",
@@ -36,9 +42,12 @@
     "tslib": "^2.3.1",
     "typescript": "^4.5.4",
     "vite": "^2.9.9",
+    "vitest": "^0.16.0",
     "webpack": "^5.73.0"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/ws-components.umd.js",
   "module": "./dist/ws-components.es.js",
   "exports": {
