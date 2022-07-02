@@ -23,8 +23,8 @@ button {
 
         &:focus {
             background: #254F85;
-            border: 1px solid #1076F9;
             box-shadow: 0px 0px 5px #1076F9;
+            outline-color: #1076F9;
         }
     }
 
