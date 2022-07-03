@@ -1,0 +1,37 @@
+button {
+    font-family: 'IBM Plex Mono';
+    min-height: 42px;
+
+    &[data-variant="primary"] {
+        background: #254F85;
+        color: #FFFFFF;
+
+        &:hover {
+            background: #1076F9;
+        }
+
+        &:focus {
+            background: #254F85;
+            box-shadow: 0px 0px 5px #1076F9;
+            outline-color: #1076F9;
+        }
+    }
+
+    &[data-variant="secondary"] {
+        background-color: transparent;
+        border: 1px solid #999999;
+        box-sizing: border-box;
+        color: #999999;
+
+        &:hover {
+            color: #EAEAEA;
+            border: 1px solid #EAEAEA;
+        }
+
+        &:focus {
+            border: 1px solid #EAEAEA;
+            filter: drop-shadow(0px 0px 5px #FFFFFF);
+            outline: none;
+        }
+    }
+}
