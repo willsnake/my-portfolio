@@ -10,6 +10,7 @@
   export let disabled = false;
   export let text = "Click Me!";
   export let variant = "primary";
+  const rest = { ...$$props };
 
   /**
    * Optional click handler
@@ -20,6 +21,7 @@
 </script>
 
 <button
+  {...rest}
   class="rounded cursor-pointer text-sm font-medium py-3 px-4"
   {type}
   aria-disabled={disabled}
