@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import { ButtonProps } from "./types";
+  import { createEventDispatcher } from "svelte"
+  import type { ButtonProps } from "./types"
 
   const dispatch = createEventDispatcher();
 
-  // type $$Props = ButtonProps;
-  interface $$Props extends ButtonProps {}
+  type $$Props = ButtonProps;
 
   export let type = "button";
   export let disabled = false;
@@ -17,10 +16,12 @@
    */
   const onClick = (event) => {
     dispatch("click", event);
-  };
+  }
+
 </script>
 
 <button
+  class="rounded cursor-pointer text-sm font-medium py-3 px-4"
   {type}
   aria-disabled={disabled}
   data-variant={variant}

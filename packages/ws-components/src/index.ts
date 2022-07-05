@@ -1,1 +1,2 @@
-export * from './Button.svelte'
+import Button from './Button/Button.svelte'
+export { Button }

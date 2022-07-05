@@ -1,0 +1,36 @@
+button {
+  min-height: 42px;
+
+  &[data-variant="primary"] {
+    background: var(--c-dark-blue);
+    color: var(--c-white);
+
+    &:hover {
+      background: var(--c-blue);
+    }
+
+    &:focus {
+      background: var(--c-dark-blue);
+      box-shadow: 0px 0px 5px var(--c-blue);
+      outline-color: var(--c-blue);
+    }
+  }
+
+  &[data-variant="secondary"] {
+    background-color: transparent;
+    border: 1px solid var(--c-light-gray);
+    box-sizing: border-box;
+    color: var(--c-light-gray);
+
+    &:hover {
+      color: var(--c-lightest-gray);
+      border: 1px solid var(--c-lightest-gray);
+    }
+
+    &:focus {
+      border: 1px solid var(--c-lightest-gray);
+      filter: drop-shadow(0px 0px 5px var(--c-white));
+      outline: none;
+    }
+  }
+}
