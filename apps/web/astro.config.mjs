@@ -1,9 +1,17 @@
 import { defineConfig } from "astro/config";
-import preact from "@astrojs/preact";
+import path from 'path';
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [preact(), svelte(), tailwind()],
+  integrations: [svelte(), tailwind()],
+  vite: {
+    resolve: {
+      alias: {
+        '@components': path.resolve('./src/components'),
+        '@pages': path.resolve('./src/pages'),
+      },
+    },
+  },
 });
