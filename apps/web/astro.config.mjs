@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-import path from 'path';
+import path from "path";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
 
@@ -9,8 +9,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@components': path.resolve('./src/components'),
-        '@pages': path.resolve('./src/pages'),
+        "@components": path.resolve("./src/components"),
+        "@pages": path.resolve("./src/pages"),
       },
     },
   },
