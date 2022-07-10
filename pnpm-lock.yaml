@@ -12,7 +12,6 @@ importers:
 
   apps/web:
     specifiers:
-      '@astrojs/preact': ^0.2.0
       '@astrojs/sitemap': ^0.1.2
       '@astrojs/svelte': ^0.2.0
       '@astrojs/tailwind': ^0.2.2
@@ -36,7 +35,6 @@ importers:
       eslint-plugin-simple-import-sort: ^7.0.0
       eslint-plugin-tailwindcss: ^3.5.2
       eslint-plugin-unused-imports: ^2.0.0
-      preact: ^10.7.3
       prettier: ^2.7.1
       prettier-plugin-astro: ^0.1.1
       rimraf: ^3.0.2
@@ -46,9 +44,8 @@ importers:
       typescript: ^4.5.4
     dependencies:
       '@willsnake/my-portfolio-components': link:../../packages/ws-components
-      preact: 10.8.2
+      svelte: 3.48.0
     devDependencies:
-      '@astrojs/preact': 0.2.0_zovicw5hrcrgb3nz2xoc225r6q
       '@astrojs/sitemap': 0.1.2
       '@astrojs/svelte': 0.2.0_o7qm3tje446hbhwtnza7ft6iqy
       '@astrojs/tailwind': 0.2.2
@@ -75,7 +72,6 @@ importers:
       prettier-plugin-astro: 0.1.1
       rimraf: 3.0.2
       sass: 1.53.0
-      svelte: 3.48.0
       tailwindcss: 3.1.4
       typescript: 4.7.4
 
@@ -259,19 +255,6 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.5
       vfile-message: 3.1.2
-    dev: true
-
-  /@astrojs/preact/0.2.0_zovicw5hrcrgb3nz2xoc225r6q:
-    resolution: {integrity: sha512-AedeRz65mmW8qvS2TR20lS1TdRSXzKY9g3X8k1OlL585XE8ZI5WfucpzNMYMQxNuRvRDoh7imO8JoKt19O/mgg==}
-    engines: {node: ^14.15.0 || >=16.0.0}
-    peerDependencies:
-      preact: ^10.6.5
-    dependencies:
-      '@babel/plugin-transform-react-jsx': 7.18.6_@babel+core@7.18.6
-      preact: 10.8.2
-      preact-render-to-string: 5.2.0_preact@10.8.2
-    transitivePeerDependencies:
-      - '@babel/core'
     dev: true
 
   /@astrojs/prism/0.4.1:
@@ -12626,18 +12609,6 @@ packages:
       jimp: 0.14.0
     dev: true
 
-  /preact-render-to-string/5.2.0_preact@10.8.2:
-    resolution: {integrity: sha512-+RGwSW78Cl+NsZRUbFW1MGB++didsfqRk+IyRVTaqy+3OjtpKK/6HgBtfszUX0YXMfo41k2iaQSseAHGKEwrbg==}
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      preact: 10.8.2
-      pretty-format: 3.8.0
-    dev: true
-
-  /preact/10.8.2:
-    resolution: {integrity: sha512-AKGt0BsDSiAYzVS78jZ9qRwuorY2CoSZtf1iOC6gLb/3QyZt+fLT09aYJBjRc/BEcRc4j+j3ggERMdNE43i1LQ==}
-
   /prebuild-install/7.1.1:
     resolution: {integrity: sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==}
     engines: {node: '>=10'}
@@ -12714,10 +12685,6 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
-    dev: true
-
-  /pretty-format/3.8.0:
-    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
     dev: true
 
   /pretty-hrtime/1.0.3:
@@ -14612,7 +14579,6 @@ packages:
   /svelte/3.48.0:
     resolution: {integrity: sha512-fN2YRm/bGumvjUpu6yI3BpvZnpIm9I6A7HR4oUNYd7ggYyIwSA/BX7DJ+UXXffLp6XNcUijyLvttbPVCYa/3xQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /svelte2tsx/0.5.11_wwvk7nlptlrqo2czohjtk6eiqm:
     resolution: {integrity: sha512-Is95G1wqNvEUJZ9DITRS2zfMwVJRZztMduPs1vJJ0cm65WUg/avBl5vBXjHycQL/qmFpaqa3NG4qWnf7bCHPag==}

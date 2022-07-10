@@ -1,9 +1,10 @@
 ---
 // Pages
-import Nav from '../components/Nav/Nav.svelte'
-import MainHead from "../components/MainHead.astro";
-import Hero from "../pages/hero.astro";
-import About from "../pages/aboutMe.astro";
+import Nav from "@components/Nav/Nav.astro";
+import MainHead from "@components/MainHead.astro";
+import Hero from "@pages/hero.astro";
+import About from "@pages/aboutMe.astro";
+import Experience from "@pages/experience.astro";
 
 // Data Fetching: List all Markdown posts in the repo.
 // const projects = await Astro.glob("./project/**/*.md");
@@ -13,16 +14,15 @@ import About from "../pages/aboutMe.astro";
 // https://docs.astro.build/core-concepts/astro-components/
 ---
 
-<html lang="en">
+<html lang="en" class="motion-safe:scroll-smooth">
+  <head>
+    <MainHead title="WillSnake Portfolio" description="WillSnake: Developer" />
+  </head>
 
-<head>
-  <MainHead title="WillSnake Portfolio" description="WillSnake: Developer" />
-</head>
-
-<body>
-  <Nav />
-  <Hero />
-  <About />
-</body>
-
+  <body class="relative">
+    <Nav />
+    <Hero />
+    <About />
+    <Experience />
+  </body>
 </html>
