@@ -1,18 +1,48 @@
 ---
-import H3 from '@components/H3/H3.svelte'
-import Text from '@components/Text/Text.svelte'
+import H3 from "@components/H3/H3.astro";
+import Text from "@components/Text/Text.svelte";
 
 const {
-    title = "Card Title",
-    date = "current",
-    description = "Card Description",
+  title = "Card Title",
+  date = "current",
+  description = "Card Description",
+  classes = "",
+  row = 1,
+  isOdd = true,
 } = Astro.props;
+
+const oddMainClasses = [];
+const oddBallClasses = [];
+const oddTitleClasses = [];
+
+if (isOdd) {
+  oddMainClasses.push("lg:border-l-0");
+  oddMainClasses.push("lg:text-right");
+  oddMainClasses.push("lg:border-r");
+  oddMainClasses.push("lg:ml-[1px]");
+
+  oddBallClasses.push("lg:left-[99.2%]");
+
+  oddTitleClasses.push("lg:right-[30px]");
+}
 ---
 
 <div
-    class="relative w-full text-left px-[30px] flex flex-col pt-6 pb-8 gap-y-2 border-l border-blue ws-card last-of-type:border-0">
-    <div class="absolute w-3 h-3 top-0 left-[-7px] border-[3px] bg-white border-blue rounded-full" />
-    <H3 variant="tertiary" style="position: absolute; top: -8px;">{title}</H3>
-    <p class="text-gray text-sm font-medium">{date}</p>
-    <Text variant="primary" style="">{description}</Text>
+  class={`card relative w-full text-left px-[30px] flex flex-col pt-6 pb-8 gap-y-2 border-l border-blue ws-card
+    last-of-type:border-0 ${classes} ${oddMainClasses.join(" ")}`}
+  style={`grid-row-start: ${row}; grid-row-end: ${row + 1};`}
+>
+  <div
+    class={`absolute w-3 h-3 top-0 left-[-7px] border-[3px] bg-white border-blue rounded-full ${oddBallClasses.join(
+      " "
+    )}`}
+  >
+  </div>
+  <H3
+    variant="tertiary"
+    classes={`absolute top-[-8px] ${oddTitleClasses.join(" ")}`}
+    >{title}
+  </H3>
+  <p class="text-gray text-sm font-medium">{date}</p>
+  <Text variant="primary" style="">{description}</Text>
 </div>
