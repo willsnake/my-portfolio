@@ -45,6 +45,8 @@
   },
   "dependencies": {
     "@willsnake/my-portfolio-components": "workspace:^0.0.0",
+    "lodash.samplesize": "^4.2.0",
+    "octokit": "^2.0.3",
     "svelte": "^3.46.4"
   }
 }
