@@ -31,8 +31,8 @@ module.exports = {
         "dark-white": "#FAFAFA",
       },
       boxShadow: {
-        'card-blog': '0px 5px 14px rgba(0, 0, 0, 0.15)',
-      }
+        "card-blog": "0px 5px 14px rgba(0, 0, 0, 0.15)",
+      },
     },
   },
   plugins: [],
