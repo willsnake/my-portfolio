@@ -3,7 +3,7 @@
         "disabled": false,
         "order": 1,
         "text":  "Home",
-        "url": "/"
+        "url": "#home"
     },{
         "disabled": false,
         "order": 2,
