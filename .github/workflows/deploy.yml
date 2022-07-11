@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  cache-and-install:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,34 +44,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
-
-  deploy:
-    runs-on: ubuntu-latest
-
-    # Allow this job to push changes to your repository
-    permissions:
-      contents: write
-
-    steps:
-      - name: Check out your repository using git
-        uses: actions/checkout@v3
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      # Not using npm? Change `npm ci` to `yarn install` or `pnpm i`
-      - name: Install dependencies
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: pnpm ci
 
-      # Not using npm? Change `npm run build` to `yarn build` or `pnpm run build`
       - name: Build Astro
         run: pnpm run build
-
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         env:
