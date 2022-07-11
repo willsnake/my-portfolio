@@ -14,5 +14,6 @@ export default defineConfig({
       },
     },
   },
-  site: "https://willsnake.dev"
+  site: "https://willsnake.github.io",
+  base: "/my-portfolio"
 });
