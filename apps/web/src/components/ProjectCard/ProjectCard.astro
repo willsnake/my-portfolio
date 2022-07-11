@@ -1,30 +1,37 @@
 ---
 import H3 from "@components/H3/H3.astro";
 import Topic from "./Topic/Topic.astro";
-import linkIcon from '/assets/link-icon.svg';
+import linkIcon from "/assets/link-icon.svg";
 
 const {
-    title = "Project Card Title",
-    topics = ['Example'],
-    description = "Project Description",
-    projectLink = "#",
-    classes = "",
+  title = "Project Card Title",
+  topics = ["Example"],
+  description = "Project Description",
+  projectLink = "#",
+  classes = "",
 } = Astro.props;
 ---
 
 <div class={`w-full text-left ${classes} mb-10`}>
-    <div class={`px-6 py-8 bg-dark-blue mb-4`}>
-        <H3 variant="primary" classes='inline-block'>{title}</H3><a href={projectLink} target="_blank"
-            class="inline-block ml-2"><img width="16" height="16" src={linkIcon} alt='Link icon that redirects to the repo url' /></a>
-    </div>
-    {topics.map((topic, index) => (
-    <Topic key={index} topic={topic} />
-    ))}
-    <p class="text-base text-gray mt-4">{description}</p>
+  <div class={`px-6 py-8 bg-dark-blue mb-4`}>
+    <H3 variant="primary" classes="inline-block">{title}</H3><a
+      href={projectLink}
+      target="_blank"
+      class="inline-block ml-2"
+      ><img
+        width="16"
+        height="16"
+        src={linkIcon}
+        alt="Link icon that redirects to the repo url"
+      />
+    </a>
+  </div>
+  {topics.map((topic, index) => <Topic key={index} topic={topic} />)}
+  <p class="text-base text-gray mt-4">{description}</p>
 </div>
 
-<style lang='scss'>
-    p {
-        font-family: 'IBM Plex Sans';
-    }
+<style lang="scss">
+  p {
+    font-family: "IBM Plex Sans";
+  }
 </style>
