@@ -36,6 +36,7 @@ importers:
       eslint-plugin-tailwindcss: ^3.5.2
       eslint-plugin-unused-imports: ^2.0.0
       lodash.samplesize: ^4.2.0
+      lodash.sortby: ^4.7.0
       octokit: ^2.0.3
       prettier: ^2.7.1
       prettier-plugin-astro: ^0.1.1
@@ -47,6 +48,7 @@ importers:
     dependencies:
       '@willsnake/my-portfolio-components': link:../../packages/ws-components
       lodash.samplesize: 4.2.0
+      lodash.sortby: 4.7.0
       octokit: 2.0.3
       svelte: 3.48.0
     devDependencies:
@@ -11001,6 +11003,10 @@ packages:
 
   /lodash.samplesize/4.2.0:
     resolution: {integrity: sha512-1ZhKV7/nuISuaQdxfCqrs4HHxXIYN+0Z4f7NMQn2PHkxFZJGavJQ1j/paxyJnLJmN2ZamNN6SMepneV+dCgQTA==}
+    dev: false
+
+  /lodash.sortby/4.7.0:
+    resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
     dev: false
 
   /lodash.uniq/4.5.0:
