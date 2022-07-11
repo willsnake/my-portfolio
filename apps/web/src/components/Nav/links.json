@@ -1,0 +1,28 @@
+[
+    {
+        "disabled": false,
+        "order": 1,
+        "text":  "Home",
+        "url": "/"
+    },{
+        "disabled": false,
+        "order": 2,
+        "text":  "About Me",
+        "url": "#about"
+    },{
+        "disabled": false,
+        "order": 3,
+        "text":  "Projects",
+        "url": "#projects"
+    },{
+        "disabled": false,
+        "order": 4,
+        "text":  "Blog",
+        "url": "#blog"
+    },{
+        "disabled": false,
+        "order": 5,
+        "text":  "Contact",
+        "url": "#contact"
+    }
+]
