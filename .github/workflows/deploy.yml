@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm ci
+        run: pnpm ci
 
       # Not using npm? Change `npm run build` to `yarn build` or `pnpm run build`
       - name: Build Astro
@@ -45,4 +45,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # `./dist` is the default Astro build directory.
           # If you changed that, update it here too.
-          publish_dir: ./dist
+          publish_dir: ./apps/web/dist
