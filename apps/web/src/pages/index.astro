@@ -6,6 +6,7 @@ import Hero from "@pages/hero.astro";
 import About from "@pages/aboutMe.astro";
 import Experience from "@pages/experience.astro";
 import Projects from "@pages/projects.astro";
+import Blog from "@pages/blog.astro";
 
 // Data Fetching: List all Markdown posts in the repo.
 // const projects = await Astro.glob("./project/**/*.md");
@@ -16,15 +17,18 @@ import Projects from "@pages/projects.astro";
 ---
 
 <html lang="en" class="motion-safe:scroll-smooth">
-  <head>
-    <MainHead title="WillSnake Portfolio" description="WillSnake: Developer" />
-  </head>
 
-  <body class="relative">
-    <Nav />
-    <Hero />
-    <About />
-    <Experience />
-    <Projects />
-  </body>
+<head>
+  <MainHead title="WillSnake Portfolio" description="WillSnake: Developer" />
+</head>
+
+<body class="relative">
+  <Nav />
+  <Hero />
+  <About />
+  <Experience />
+  <Projects />
+  <Blog />
+</body>
+
 </html>
