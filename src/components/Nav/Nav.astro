@@ -1,0 +1,54 @@
+---
+import sortBy from "lodash.sortby";
+import links from "./links.json";
+
+const sortedLinks = sortBy(links, "order");
+const enabledLinks = sortedLinks.filter((link) => !link.disabled);
+
+let baseClass =
+  "block absolute h-0.5 w-full bg-dark-white transform transition duration-500 ease-in-out";
+---
+
+<div
+  class="font-medium text-sm w-full bg-black-blue sticky top-0 text-dark-white z-10"
+>
+  <div
+    class="px-6 lg:container lg:mx-auto lg:pr-0 lg:pl-6 flex items-center content-center justify-between h-20"
+  >
+    <a href="/">/ W I L L S N A K E</a>
+    <nav class="h-9 text-light-gray" x-data="{ open: false }">
+      <button
+        class="w-8 h-full relative lg:hidden"
+        @click="open = !open"
+        aria-label="Open main menu"
+      >
+        <span
+          aria-hidden="true"
+          class={baseClass}
+          :class="{'rotate-45': open,' -translate-y-2': !open }"></span>
+        <span
+          aria-hidden="true"
+          class={baseClass}
+          :class="{'opacity-0': open } "></span>
+        <span
+          aria-hidden="true"
+          class={baseClass}
+          :class="{'-rotate-45': open, ' translate-y-2': !open}"></span>
+      </button>
+      <ul
+        class="w-full bg-dark-gray absolute lg:static left-0 top-20 lg:top-0 flex flex-col content-center justify-center gap-y-10 items-center h-screen pb-20 lg:pb-0 lg:inline-table lg:border-spacing-x-10 lg:list-none lg:h-full lg:w-auto lg:bg-transparent"
+        :class="{'block': open,' hidden lg:block': !open }"
+      >
+        {
+          enabledLinks.map(({ text, url }) => (
+            <li class="text-center lg:table-cell lg:align-middle">
+              <a class="hover:text-dark-white" @click="open = !open" href={url}>
+                {text}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</div>
