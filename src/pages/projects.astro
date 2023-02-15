@@ -1,10 +1,10 @@
 ---
-import { Octokit } from "octokit";
+import { Octokit } from "@octokit/core";
 import sampleSize from "lodash.samplesize";
 import H2 from "@components/H2/H2.astro";
 import ProjectCard from "@components/ProjectCard/ProjectCard.astro";
 
-const octokit = new Octokit({ auth: import.meta.env.GH_TOKEN });
+const octokit = new Octokit({ auth: import.meta.env.PUBLIC_GH_TOKEN });
 
 const { data } = await octokit.request("GET /user/repos", {});
 const repos = sampleSize(data, 4);
@@ -17,15 +17,18 @@ const repos = sampleSize(data, 4);
   <H2
     variant="secondary"
     classes="mb-10 lg:row-start-1 lg:col-start-1 lg:row-end-2 lg:col-end-3"
-    >Recent Projects
+  >
+    Recent Projects
   </H2>
-  {repos.map(({ name, description, html_url, topics }) => (
-    <ProjectCard
-      key={name}
-      title={name}
-      topics={topics}
-      description={description}
-      projectLink={html_url}
-    />
-  ))}
+  {
+    repos.map(({ name, description, html_url, topics }) => (
+      <ProjectCard
+        key={name}
+        title={name}
+        topics={topics}
+        description={description}
+        projectLink={html_url}
+      />
+    ))
+  }
 </section>

@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  readonly GH_TOKEN: string;
+  readonly PUBLIC_GH_TOKEN: string;
 }
 
 interface ImportMeta {
