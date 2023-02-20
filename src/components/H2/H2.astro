@@ -1,0 +1,21 @@
+---
+type Variants = "primary" | "secondary";
+
+interface Props {
+  variant: Variants;
+  classes?: string;
+}
+
+const { variant = "primary", classes = "" } = Astro.props as Props;
+
+let textColor: string = "dark-white";
+if (variant === "secondary") {
+  textColor = "dark-blue";
+}
+---
+
+<h2
+  class={`text-[32px] leading-[42px] tracking-[1px] text-${textColor} ${classes}`}
+>
+  <slot />
+</h2>
