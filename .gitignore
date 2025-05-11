@@ -29,6 +29,7 @@ lerna-debug.log*
 # local env files
 .env
 .env.local
+.env.production
 .env.development.local
 .env.test.local
 .env.production.local
@@ -51,3 +52,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Astro
+.astro/
