@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+    --color-transparent: transparent;
+    --color-black: #000;
+    --color-white: #fff;
+    --color-black-blue: #111111;
+    --color-dark-blue: #254F85;
+    --color-blue: #1076F9;
+    --color-dark-gray: #333333;
+    --color-gray: #666666;
+    --color-light-gray: #999999;
+    --color-lightest-gray: #EAEAEA;
+    --color-dark-white: #FAFAFA;
+    --shadow-card-blog: 0px 5px 14px rgba(0, 0, 0, 0.15); 
+}
