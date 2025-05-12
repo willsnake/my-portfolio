@@ -12,7 +12,22 @@ importers:
         specifier: ^2.5.3
         version: 2.5.3
 
-  apps/design-system:
+  apps/new-portfolio:
+    dependencies:
+      '@astrojs/mdx':
+        specifier: ^4.2.6
+        version: 4.2.6(astro@5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.40.2)(sass@1.88.0)(terser@5.39.0)(typescript@5.8.3)(yaml@2.7.1))
+      '@astrojs/rss':
+        specifier: ^4.0.11
+        version: 4.0.11
+      '@astrojs/sitemap':
+        specifier: ^3.3.1
+        version: 3.3.1
+      astro:
+        specifier: ^5.7.12
+        version: 5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.40.2)(sass@1.88.0)(terser@5.39.0)(typescript@5.8.3)(yaml@2.7.1)
+
+  packages/design-system:
     dependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.6
@@ -60,21 +75,6 @@ importers:
       vite:
         specifier: ^6.0.4
         version: 6.3.5(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(sass@1.88.0)(terser@5.39.0)(yaml@2.7.1)
-
-  apps/new-portfolio:
-    dependencies:
-      '@astrojs/mdx':
-        specifier: ^4.2.6
-        version: 4.2.6(astro@5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.40.2)(sass@1.88.0)(terser@5.39.0)(typescript@5.8.3)(yaml@2.7.1))
-      '@astrojs/rss':
-        specifier: ^4.0.11
-        version: 4.0.11
-      '@astrojs/sitemap':
-        specifier: ^3.3.1
-        version: 3.3.1
-      astro:
-        specifier: ^5.7.12
-        version: 5.7.12(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(rollup@4.40.2)(sass@1.88.0)(terser@5.39.0)(typescript@5.8.3)(yaml@2.7.1)
 
 packages:
 
