@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { StoryObj, Meta } from '@storybook/preact';
 import { fn } from '@storybook/test';
 import { Button } from './Button';
