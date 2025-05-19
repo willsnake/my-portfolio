@@ -1,4 +1,4 @@
-import { h, FunctionComponent } from 'preact';
+import { FunctionComponent } from 'preact';
 import { ButtonProps } from './types';
 
 /**
@@ -21,6 +21,8 @@ export const Button: FunctionComponent<ButtonProps> = ({
    * Optional click handler
    */
   const handleClick = (event: MouseEvent) => {
+    if (disabled) return
+
     if (onClick) {
       onClick(event);
     }
