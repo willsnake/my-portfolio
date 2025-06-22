@@ -1,4 +1,5 @@
-import { h, FunctionComponent } from 'preact';
+import { FunctionComponent } from 'preact';
+import { cv } from 'css-variants'
 import { CardProps } from './types';
 
 /**
@@ -18,21 +19,45 @@ export const Card: FunctionComponent<CardProps> = ({
   children,
   ...rest
 }) => {
-  // Classes for odd-positioned cards
-  const oddMainClasses = isOdd ? [
-    "lg:border-l-0",
-    "lg:text-right",
-    "lg:border-r",
-    "lg:ml-[1px]"
-  ] : [];
+  // Define classes with css-variants
+  const cardClasses = cv({
+    base: 'card relative w-full text-left px-[30px] flex flex-col pt-6 pb-8 gap-y-2 border-l border-blue ws-card last-of-type:border-0',
+    variants: {
+      position: {
+        odd: 'lg:border-l-0 lg:text-right lg:border-r lg:ml-[1px]',
+        even: '',
+      },
+    },
+    defaultVariants: {
+      position: 'even',
+    }
+  });
 
-  const oddBallClasses = isOdd ? [
-    "lg:left-[99.2%]"
-  ] : [];
+  const ballClasses = cv({
+    base: 'absolute w-3 h-3 top-0 left-[-7px] border-[3px] bg-white border-blue rounded-full',
+    variants: {
+      position: {
+        odd: 'lg:left-[99.2%]',
+        even: '',
+      },
+    },
+    defaultVariants: {
+      position: 'even',
+    }
+  });
 
-  const oddTitleClasses = isOdd ? [
-    "lg:right-[30px]"
-  ] : [];
+  const titleClasses = cv({
+    base: 'text-tertiary absolute top-[-8px]',
+    variants: {
+      position: {
+        odd: 'lg:right-[30px]',
+        even: '',
+      },
+    },
+    defaultVariants: {
+      position: 'even',
+    }
+  });
 
   // Combine all styles
   const combinedStyle = {
@@ -41,18 +66,19 @@ export const Card: FunctionComponent<CardProps> = ({
     ...style
   };
 
+  const position = isOdd ? 'odd' : 'even';
+
   return (
     <div
-      class={`card relative w-full text-left px-[30px] flex flex-col pt-6 pb-8 gap-y-2 border-l border-blue ws-card
-        last-of-type:border-0 ${className} ${oddMainClasses.join(" ")}`}
+      class={cardClasses({ position, className })}
       style={combinedStyle}
       {...rest}
     >
       <div
-        class={`absolute w-3 h-3 top-0 left-[-7px] border-[3px] bg-white border-blue rounded-full ${oddBallClasses.join(" ")}`}
+        class={ballClasses({ position })}
       />
       <h3
-        class={`text-tertiary absolute top-[-8px] ${oddTitleClasses.join(" ")}`}
+        class={titleClasses({ position })}
       >
         {title}
       </h3>
@@ -61,5 +87,3 @@ export const Card: FunctionComponent<CardProps> = ({
     </div>
   );
 };
-
-export default Card;

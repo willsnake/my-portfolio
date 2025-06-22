@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { StoryObj, Meta } from '@storybook/preact';
 import { Card } from './Card';
 
