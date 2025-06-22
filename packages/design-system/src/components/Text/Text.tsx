@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'preact';
+import { cv } from 'css-variants'
 import type { TextProps } from './types';
 
 /**
@@ -14,18 +15,23 @@ export const Text: FunctionComponent<TextProps> = ({
     ...rest
 }) => {
 
-    let textColor: 'base-gray' | 'lightest-gray' = "base-gray";
-
-    if (variant === "secondary") {
-        textColor = "lightest-gray";
-    }
-
-    const baseClasses = `font-normal text-base text-${textColor}`
+    const classNames = cv({
+        base: 'font-normal text-base',
+        variants: {
+            color: {
+                primary: 'text-gray',
+                secondary: 'text-lightest-gray'
+            },
+        },
+        defaultVariants: {
+            color: 'primary',
+        }
+    })
 
     return (
         <p
             {...rest}
-            class={baseClasses}
+            class={classNames({ color: variant, className: className })}
             data-variant={variant}
         >
             {children}
@@ -33,4 +39,3 @@ export const Text: FunctionComponent<TextProps> = ({
     );
 };
 
-export default Text;
