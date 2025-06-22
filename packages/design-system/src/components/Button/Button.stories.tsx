@@ -52,14 +52,6 @@ export const Secondary: Story = {
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    variant: 'primary',
-    text: 'Disabled Button',
-    disabled: true,
-  },
-};
-
 export const WithCustomWidth: Story = {
   args: {
     variant: 'primary',

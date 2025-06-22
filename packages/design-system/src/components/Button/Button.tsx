@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'preact';
+import { cv } from 'css-variants'
 import { ButtonProps } from './types';
 
 /**
@@ -28,22 +29,23 @@ export const Button: FunctionComponent<ButtonProps> = ({
     }
   };
 
-  // Base classes for all button variants
-  const baseClasses = 'rounded cursor-pointer text-sm font-medium py-3 px-4 min-h-[42px]';
-  
-  // Variant-specific classes
-  const variantClasses = {
-    primary: 'bg-dark-blue text-white hover:bg-blue focus:bg-dark-blue focus:shadow-[0px_0px_5px_var(--color-blue)] focus:outline-blue',
-    secondary: 'bg-transparent border border-light-gray text-light-gray hover:text-lightest-gray hover:border-lightest-gray focus:border-lightest-gray focus:shadow-[0px_0px_5px_var(--color-white)] focus:outline-none'
-  };
-
-  // Combine all classes
-  const buttonClasses = `${baseClasses} ${variantClasses[variant]} ${className}`;
+  const classNames = cv({
+    base: 'rounded cursor-pointer text-sm font-medium py-3 px-4 min-h-[42px]',
+    variants: {
+      color: {
+        primary: 'bg-dark-blue text-white hover:bg-blue focus:bg-dark-blue focus:shadow-[0px_0px_5px_var(--color-blue)] focus:outline-blue',
+        secondary: 'bg-transparent border border-light-gray text-light-gray hover:text-lightest-gray hover:border-lightest-gray focus:border-lightest-gray focus:shadow-[0px_0px_5px_var(--color-white)] focus:outline-none' 
+      },
+    },
+    defaultVariants: {
+      color: 'primary',
+    }
+  })
 
   return (
     <button
       {...rest}
-      class={buttonClasses}
+      class={classNames({ color: variant, className: className })}
       type={type}
       aria-disabled={disabled}
       data-variant={variant}
