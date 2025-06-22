@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wdth,wght@0,75..100,100..700;1,75..100,100..700&display=swap');
+
 @import "tailwindcss";
 
 @theme {
@@ -12,5 +14,10 @@
     --color-lightest-gray: oklch(93.70% 0.000 0);
     --color-transparent: transparent;
     --color-white: oklch(100.00% 0.000 0);
+    --font-ibm-plex-sans: "IBM Plex Sans", sans-serif;
     --shadow-card-blog: 0px 5px 14px oklch(0 0 360); 
+}
+
+* {
+    font-family: "IBM Plex Sans";
 }
