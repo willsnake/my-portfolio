@@ -1,4 +1,4 @@
-import { StoryObj, Meta } from '@storybook/preact';
+import { StoryObj, Meta } from '@storybook/preact-vite';
 import { Card } from './Card';
 
 const meta = {

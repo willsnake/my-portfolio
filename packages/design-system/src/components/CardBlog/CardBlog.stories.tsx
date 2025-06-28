@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/preact';
+import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { CardBlog } from './CardBlog';
 import type { CardBlogProps } from './types';
 
