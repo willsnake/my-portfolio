@@ -1,5 +1,5 @@
-import { StoryObj, Meta } from '@storybook/preact';
-import { fn } from '@storybook/test';
+import { StoryObj, Meta } from '@storybook/preact-vite';
+import { fn } from 'storybook/test';
 import { Button } from './Button';
 import { VARIANTS_MAP } from './types';
 

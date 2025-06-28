@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/preact';
+import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { H2 } from './H2';
 import type { H2Props } from './types';
 
