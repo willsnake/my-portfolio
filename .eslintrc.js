@@ -9,6 +9,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:astro/recommended",
     "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
   ],
   parserOptions: {
     ecmaVersion: "latest",
