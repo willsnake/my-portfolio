@@ -1,0 +1,32 @@
+{
+  "name": "@ws-portfolio/design-system",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.6",
+    "css-variants": "^2.1.0",
+    "preact": "^10.25.3",
+    "radash": "^12.1.1",
+    "tailwindcss": "^4.1.6"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.6",
+    "@preact/preset-vite": "^2.9.3",
+    "@storybook/addon-essentials": "^8.6.12",
+    "@storybook/addon-themes": "^8.6.12",
+    "@storybook/blocks": "^8.6.12",
+    "@storybook/experimental-addon-test": "^8.6.12",
+    "@storybook/preact": "^8.6.12",
+    "@storybook/preact-vite": "^8.6.12",
+    "@storybook/test": "^8.6.12",
+    "storybook": "^8.6.12",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.4"
+  }
+}
