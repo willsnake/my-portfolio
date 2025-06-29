@@ -77,13 +77,15 @@ jobs:
         with:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: versions upload --env staging --tag ${{ env.GITHUB_SHORT_SHA }}
           wranglerVersion: "4.22.0"
+          packageManager: pnpm
     
 
       - name: print wrangler command output
         env:
-          CMD_OUTPUT: ${{ steps.version-upload.outputs }}
+          CMD_OUTPUT: ${{ steps.version-upload.outputs.deployment-url }}
         run: echo $CMD_OUTPUT
 
       # Deploy to Cloudflare Workers
