@@ -75,13 +75,6 @@ jobs:
             echo "No lint script found in package.json, skipping"
           fi
 
-      # Build the design system
-      - name: Build Design System
-        if: steps.check-changes.outputs.changes == 'true'
-        working-directory: ./packages/design-system
-        run: |
-          pnpm build
-
       # Build Storybook
       - name: Build Storybook
         if: steps.check-changes.outputs.changes == 'true'
