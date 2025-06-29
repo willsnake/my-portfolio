@@ -1,0 +1,50 @@
+name: Detect Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      design-system: ${{ steps.filter.outputs.design-system }}
+      new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+      
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter for changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            design-system:
+              - 'packages/design-system/**'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/design-system.yml'
+            new-portfolio:
+              - 'apps/new-portfolio/**'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/new-portfolio.yml'
+              
+      # Save PR info for use in dependent workflows
+      - name: Save PR Data
+        if: always()
+        run: |
+          echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> pr.json
+          echo "PR_HEAD_REF=${{ github.event.pull_request.head.ref }}" >> pr.json
+          echo "PR_BASE_REF=${{ github.event.pull_request.base.ref }}" >> pr.json
+          echo "DESIGN_SYSTEM_CHANGED=${{ steps.filter.outputs.design-system }}" >> pr.json
+          echo "NEW_PORTFOLIO_CHANGED=${{ steps.filter.outputs.new-portfolio }}" >> pr.json
+          
+      - name: Upload PR Data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-data
+          path: pr.json
+          retention-days: 1

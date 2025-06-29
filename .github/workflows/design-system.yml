@@ -1,0 +1,155 @@
+name: Design System Workflow
+
+on:
+  workflow_run:
+    workflows: [Detect Changes]
+    types:
+      - completed
+
+jobs:
+  design-system:
+    name: Design System Build, Test and Deploy
+    runs-on: ubuntu-latest
+    # Only run when detect-changes workflow triggers it and design-system changes detected
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Download workflow artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: detect-changes.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: pr-data
+          path: .
+
+      - name: Set PR data
+        run: cat pr.json >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PR_HEAD_REF }}
+
+      # Check if design-system changes were detected
+      - name: Check if design-system changed
+        id: check-changes
+        run: |
+          if [ "${{ env.DESIGN_SYSTEM_CHANGED }}" = "true" ]; then
+            echo "Design System changes detected!"
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No Design System changes detected, skipping workflow"
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    #   # Setup Node and PNPM with mise.toml versions
+    #   - name: Setup Node
+    #     if: steps.check-changes.outputs.changes == 'true'
+    #     uses: actions/setup-node@v4
+    #     with:
+    #       node-version: '22.15.0'
+
+    #   - name: Setup PNPM
+    #     if: steps.check-changes.outputs.changes == 'true'
+    #     uses: pnpm/action-setup@v3
+    #     with:
+    #       version: '10.10.0'
+
+    #   - name: Install dependencies
+    #     if: steps.check-changes.outputs.changes == 'true'
+    #     run: pnpm install
+
+      # Run linting and formatting
+      - name: Lint Design System
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./packages/design-system
+        run: |
+          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
+            pnpm lint
+          else
+            echo "No lint script found in package.json, skipping"
+          fi
+
+      # Build the design system
+      - name: Build Design System
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./packages/design-system
+        run: |
+          pnpm build
+
+      # Build Storybook
+      - name: Build Storybook
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./packages/design-system
+        run: |
+          pnpm build-storybook
+    
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: versions upload --env staging --tag ${{ env.PR_HEAD_REF }}
+          environment: staging
+    
+      - name: print wrangler command output
+        env:
+          CMD_OUTPUT: ${{ steps.deploy.outputs.command-output }}
+        run: echo $CMD_OUTPUT
+
+      # Deploy to Cloudflare Workers
+    #   - name: Deploy to Cloudflare Workers
+    #     if: steps.check-changes.outputs.changes == 'true'
+    #     id: deploy
+    #     env:
+    #       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    #       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    #     working-directory: ./packages/design-system
+    #     run: |
+    #       DEPLOY_OUTPUT=$(pnpm deploy 2>&1 || exit 1)
+    #       PREVIEW_URL=$(echo "$DEPLOY_OUTPUT" | grep -o 'https://[^ ]*workers.dev')
+    #       echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
+          
+      # Check if a comment already exists
+    #   - name: Find comment
+    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url
+    #     uses: peter-evans/find-comment@v3
+    #     id: find-comment
+    #     with:
+    #       issue-number: ${{ env.PR_NUMBER }}
+    #       comment-author: 'github-actions[bot]'
+    #       body-includes: 'Design System Preview'
+
+      # Create a new comment if one doesn't exist
+    #   - name: Create comment
+    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url && steps.find-comment.outputs.comment-id == ''
+    #     uses: peter-evans/create-or-update-comment@v3
+    #     with:
+    #       issue-number: ${{ env.PR_NUMBER }}
+    #       body: |
+    #         ### Design System Preview
+            
+    #         ✅ Design System has been deployed to Cloudflare Workers.
+            
+    #         🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}
+            
+    #         This comment will be updated when the preview is redeployed.
+
+      # Update an existing comment
+    #   - name: Update comment
+    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url && steps.find-comment.outputs.comment-id != ''
+    #     uses: peter-evans/create-or-update-comment@v3
+    #     with:
+    #       comment-id: ${{ steps.find-comment.outputs.comment-id }}
+    #       edit-mode: replace
+    #       body: |
+    #         ### Design System Preview
+            
+    #         ✅ Design System has been redeployed to Cloudflare Workers.
+            
+    #         🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}
+            
+    #         Last updated: ${{ github.event.workflow_run.updated_at }}
