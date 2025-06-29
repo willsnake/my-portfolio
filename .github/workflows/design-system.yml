@@ -80,6 +80,7 @@ jobs:
           command: versions upload --env staging --tag ${{ env.GITHUB_SHORT_SHA }}
           wranglerVersion: "4.22.0"
     
+
       - name: print wrangler command output
         env:
           CMD_OUTPUT: ${{ steps.version-upload.outputs.command-output }}
