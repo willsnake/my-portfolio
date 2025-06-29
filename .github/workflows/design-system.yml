@@ -77,7 +77,7 @@ jobs:
         with:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: versions upload --env staging --tag ${{ env.PR_HEAD_REF }}
+          command: versions upload --env staging --tag ${{ env.GITHUB_SHORT_SHA }}
           wranglerVersion: "4.22.0"
     
       - name: print wrangler command output
