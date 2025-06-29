@@ -4,6 +4,7 @@
   "scripts": {},
   "packageManager": "pnpm@10.10.0",
   "devDependencies": {
-    "turbo": "^2.5.3"
+    "turbo": "2.5.3",
+    "wrangler": "4.22.0"
   }
 }
