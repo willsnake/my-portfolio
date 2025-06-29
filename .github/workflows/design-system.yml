@@ -49,19 +49,6 @@ jobs:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    #   # Setup Node and PNPM with mise.toml versions
-    #   - name: Setup Node
-    #     if: steps.check-changes.outputs.changes == 'true'
-    #     uses: actions/setup-node@v4
-    #     with:
-    #       node-version: '22.15.0'
-
-    #   - name: Setup PNPM
-    #     if: steps.check-changes.outputs.changes == 'true'
-    #     uses: pnpm/action-setup@v3
-    #     with:
-    #       version: '10.10.0'
-
       - name: Install dependencies
         if: steps.check-changes.outputs.changes == 'true'
         run: pnpm install
@@ -85,7 +72,9 @@ jobs:
           pnpm build-storybook
     
       - uses: cloudflare/wrangler-action@v3
+        if: steps.check-changes.outputs.changes == 'true'
         with:
+          workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: versions upload --env staging --tag ${{ env.PR_HEAD_REF }}
           environment: staging
