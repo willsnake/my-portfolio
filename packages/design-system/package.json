@@ -6,7 +6,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "dev": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy": "storybook build && wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
