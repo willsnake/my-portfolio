@@ -73,16 +73,16 @@ jobs:
     
       - uses: cloudflare/wrangler-action@v3
         if: steps.check-changes.outputs.changes == 'true'
+        id: version-upload
         with:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: versions upload --env staging --tag ${{ env.PR_HEAD_REF }}
           wranglerVersion: "4.22.0"
-          environment: staging
     
       - name: print wrangler command output
         env:
-          CMD_OUTPUT: ${{ steps.deploy.outputs.command-output }}
+          CMD_OUTPUT: ${{ steps.version-upload.outputs.command-output }}
         run: echo $CMD_OUTPUT
 
       # Deploy to Cloudflare Workers

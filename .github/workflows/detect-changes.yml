@@ -40,6 +40,7 @@ jobs:
           echo "PR_BASE_REF=${{ github.event.pull_request.base.ref }}" >> pr.json
           echo "DESIGN_SYSTEM_CHANGED=${{ steps.filter.outputs.design-system }}" >> pr.json
           echo "NEW_PORTFOLIO_CHANGED=${{ steps.filter.outputs.new-portfolio }}" >> pr.json
+          echo "GITHUB_SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> pr.json
           
       - name: Upload PR Data
         if: always()
