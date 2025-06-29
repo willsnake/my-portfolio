@@ -1,0 +1,32 @@
+name: Detect Changes
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      design-system: ${{ steps.filter.outputs.design-system }}
+      new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+      
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter for changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            design-system:
+              - 'packages/design-system/**'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/design-system.yml'
+            new-portfolio:
+              - 'apps/new-portfolio/**'
+              - 'pnpm-lock.yaml'
+              - '.github/workflows/new-portfolio.yml'
