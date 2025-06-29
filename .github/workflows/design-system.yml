@@ -41,7 +41,9 @@ jobs:
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
 
-      - uses: jdx/mise-action@v2
+      - name: Setup Mise
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: jdx/mise-action@v2
         with:
           install: true
           cache: true
@@ -60,9 +62,9 @@ jobs:
     #     with:
     #       version: '10.10.0'
 
-    #   - name: Install dependencies
-    #     if: steps.check-changes.outputs.changes == 'true'
-    #     run: pnpm install
+      - name: Install dependencies
+        if: steps.check-changes.outputs.changes == 'true'
+        run: pnpm install
 
       # Run linting and formatting
       - name: Lint Design System
