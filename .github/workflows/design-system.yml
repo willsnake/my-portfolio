@@ -78,7 +78,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env staging --tag ${{ env.GITHUB_SHORT_SHA }}
+          command: versions upload --env staging --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
     
@@ -101,43 +101,43 @@ jobs:
     #       PREVIEW_URL=$(echo "$DEPLOY_OUTPUT" | grep -o 'https://[^ ]*workers.dev')
     #       echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
           
-      # Check if a comment already exists
-    #   - name: Find comment
-    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url
-    #     uses: peter-evans/find-comment@v3
-    #     id: find-comment
-    #     with:
-    #       issue-number: ${{ env.PR_NUMBER }}
-    #       comment-author: 'github-actions[bot]'
-    #       body-includes: 'Design System Preview'
+    #   Check if a comment already exists
+      - name: Find comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Design System Preview'
 
       # Create a new comment if one doesn't exist
-    #   - name: Create comment
-    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url && steps.find-comment.outputs.comment-id == ''
-    #     uses: peter-evans/create-or-update-comment@v3
-    #     with:
-    #       issue-number: ${{ env.PR_NUMBER }}
-    #       body: |
-    #         ### Design System Preview
+      - name: Create comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          body: |
+            ### Design System Preview
             
-    #         ✅ Design System has been deployed to Cloudflare Workers.
+            ✅ Design System has been deployed to Cloudflare Workers.
             
-    #         🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
             
-    #         This comment will be updated when the preview is redeployed.
+            This comment will be updated when the preview is redeployed.
 
       # Update an existing comment
-    #   - name: Update comment
-    #     if: steps.check-changes.outputs.changes == 'true' && steps.deploy.outputs.preview_url && steps.find-comment.outputs.comment-id != ''
-    #     uses: peter-evans/create-or-update-comment@v3
-    #     with:
-    #       comment-id: ${{ steps.find-comment.outputs.comment-id }}
-    #       edit-mode: replace
-    #       body: |
-    #         ### Design System Preview
+      - name: Update comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            ### Design System Preview
             
-    #         ✅ Design System has been redeployed to Cloudflare Workers.
+            ✅ Design System has been redeployed to Cloudflare Workers.
             
-    #         🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
             
-    #         Last updated: ${{ github.event.workflow_run.updated_at }}
+            Last updated: ${{ github.event.workflow_run.updated_at }}
