@@ -1,0 +1,50 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-design-system:
+    name: Deploy Design System to Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # Run linting and testing
+      - name: Lint and Test Design System
+        working-directory: ./packages/design-system
+        run: |
+          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
+            pnpm lint
+          fi
+          if [ -f "package.json" ] && grep -q '"test"' package.json; then
+            pnpm test
+          fi
+
+      # Build Storybook
+      - name: Build Storybook
+        working-directory: ./packages/design-system
+        run: pnpm build-storybook
+    
+      # Deploy to Cloudflare Workers Staging
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          workingDirectory: "./packages/design-system"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --env staging --minify --upload-source-maps
+          wranglerVersion: "4.22.0"
+          packageManager: pnpm

@@ -1,0 +1,124 @@
+name: Design System Workflow
+
+on:
+  workflow_run:
+    workflows: [Detect Changes]
+    types:
+      - completed
+
+jobs:
+  design-system:
+    name: Design System Build, Test and Deploy
+    runs-on: ubuntu-latest
+    # Only run when detect-changes workflow triggers it and design-system changes detected
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Download workflow artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: detect-changes.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: pr-data
+          path: .
+
+      - name: Set PR data
+        run: cat pr.json >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PR_HEAD_REF }}
+
+      # Check if design-system changes were detected
+      - name: Check if design-system changed
+        id: check-changes
+        run: |
+          if [ "${{ env.DESIGN_SYSTEM_CHANGED }}" = "true" ]; then
+            echo "Design System changes detected!"
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No Design System changes detected, skipping workflow"
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Mise
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        if: steps.check-changes.outputs.changes == 'true'
+        run: pnpm install
+
+      # Run linting and formatting
+      - name: Lint Design System
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./packages/design-system
+        run: |
+          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
+            pnpm lint
+          else
+            echo "No lint script found in package.json, skipping"
+          fi
+
+      # Build Storybook
+      - name: Build Storybook
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./packages/design-system
+        run: |
+          pnpm build-storybook
+    
+      - uses: cloudflare/wrangler-action@v3
+        if: steps.check-changes.outputs.changes == 'true'
+        id: version-upload
+        with:
+          workingDirectory: "./packages/design-system"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload --env staging --tag="${{ env.GITHUB_SHORT_SHA }}"
+          wranglerVersion: "4.22.0"
+          packageManager: pnpm
+          
+    #   Check if a comment already exists
+      - name: Find comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'Design System Preview'
+
+      # Create a new comment if one doesn't exist
+      - name: Create comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          body: |
+            ### Design System Preview
+            
+            ✅ Design System has been deployed to Cloudflare Workers.
+            
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
+            
+            This comment will be updated when the preview is redeployed.
+
+      # Update an existing comment
+      - name: Update comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            ### Design System Preview
+            
+            ✅ Design System has been redeployed to Cloudflare Workers.
+            
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
+            
+            Last updated: ${{ github.event.workflow_run.updated_at }}
