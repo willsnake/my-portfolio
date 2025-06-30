@@ -10,6 +10,7 @@ jobs:
   design-system:
     name: Design System Build, Test and Deploy
     runs-on: ubuntu-latest
+    # Only run when detect-changes workflow triggers it and design-system changes detected
     if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Download workflow artifact
