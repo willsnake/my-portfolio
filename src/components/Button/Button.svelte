@@ -1,23 +1,24 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import type { ButtonProps } from "./types";
+// biome-ignore-all lint/correctness/noUndeclaredVariables: svelte is partially supported by Biome
+import { createEventDispatcher } from 'svelte';
+import type { ButtonProps } from './types';
 
-  const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher();
 
-  type $$Props = ButtonProps;
+type $$Props = ButtonProps;
 
-  export let type = "button";
-  export let disabled = false;
-  export let text = "Click Me!";
-  export let variant = "primary";
-  const rest = { ...$$props };
+export let type = 'button';
+export let disabled = false;
+export let text = 'Click Me!';
+export let variant = 'primary';
+const _rest = { ...$$props };
 
-  /**
-   * Optional click handler
-   */
-  const onClick = (event) => {
-    dispatch("click", event);
-  };
+/**
+ * Optional click handler
+ */
+const _onClick = (event) => {
+  dispatch('click', event);
+};
 </script>
 
 <button

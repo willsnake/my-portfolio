@@ -1,13 +1,14 @@
 <script lang="ts">
-  type Variants = "primary" | "secondary";
+// biome-ignore-all lint/correctness/noUndeclaredVariables: svelte is partially supported by Biome
+type Variants = 'primary' | 'secondary';
 
-  export let variant: Variants = "primary";
-  const rest = { ...$$props };
+export let variant: Variants = 'primary';
+const _rest = { ...$$props };
 
-  let textColor: string = "base-gray";
-  if (variant === "secondary") {
-    textColor = "lightest-gray";
-  }
+let _textColor = 'base-gray';
+if (variant === 'secondary') {
+  _textColor = 'lightest-gray';
+}
 </script>
 
 <p {...rest} class={`font-normal text-base ${textColor}`}>

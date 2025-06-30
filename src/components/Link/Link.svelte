@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { LinkProps } from "./types";
+import type { LinkProps } from './types';
 
-  type $$Props = LinkProps;
+type $$Props = LinkProps;
 
-  export let to = "/";
-  export let text = "I'm a Link";
+export let to = '/';
+export let text = "I'm a Link";
 </script>
 
 <a href={to} class="font-medium text-sm underline text-dark-blue hover:text-blue">

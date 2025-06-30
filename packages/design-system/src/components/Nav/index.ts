@@ -1,2 +1,2 @@
 export { Nav } from './Nav';
-export type { NavProps, NavLink } from './types';
+export type { NavLink, NavProps } from './types';

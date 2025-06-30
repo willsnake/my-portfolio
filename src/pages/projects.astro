@@ -1,13 +1,11 @@
 ---
-import { Octokit } from "@octokit/core";
-import sampleSize from "lodash.samplesize";
-import H2 from "@components/H2/H2.astro";
-import ProjectCard from "@components/ProjectCard/ProjectCard.astro";
+import { Octokit } from '@octokit/core';
+import sampleSize from 'lodash.samplesize';
 
 const octokit = new Octokit({ auth: import.meta.env.PUBLIC_GH_TOKEN });
 
-const { data } = await octokit.request("GET /user/repos", {});
-const repos = sampleSize(data, 4);
+const { data } = await octokit.request('GET /user/repos', {});
+const _repos = sampleSize(data, 4);
 ---
 
 <section

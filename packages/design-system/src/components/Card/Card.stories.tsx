@@ -1,4 +1,4 @@
-import { StoryObj, Meta } from '@storybook/preact-vite';
+import { Meta, StoryObj } from '@storybook/preact-vite';
 import { Card } from './Card';
 
 const meta = {
@@ -8,25 +8,25 @@ const meta = {
   argTypes: {
     title: {
       control: 'text',
-      description: 'Title of the card'
+      description: 'Title of the card',
     },
     date: {
       control: 'text',
-      description: 'Date or time information'
+      description: 'Date or time information',
     },
     description: {
       control: 'text',
-      description: 'Description or content of the card'
+      description: 'Description or content of the card',
     },
     row: {
       control: { type: 'number', min: 1, max: 10 },
-      description: 'Grid row position'
+      description: 'Grid row position',
     },
     isOdd: {
       control: 'boolean',
-      description: 'Whether the card is in an odd position (affects styling)'
-    }
-  }
+      description: 'Whether the card is in an odd position (affects styling)',
+    },
+  },
 } satisfies Meta<typeof Card>;
 
 export default meta;
@@ -38,13 +38,20 @@ export const Default: Story = {
     date: 'May 2025',
     description: 'This is a default card with a description.',
     row: 1,
-    isOdd: true
+    isOdd: true,
   },
   render: (args) => (
-    <div style={{ display: 'grid', maxHeight: '800px', maxWidth: '800px', margin: '0 auto' }}>
+    <div
+      style={{
+        display: 'grid',
+        maxHeight: '800px',
+        maxWidth: '800px',
+        margin: '0 auto',
+      }}
+    >
       <Card {...args} />
     </div>
-  )
+  ),
 };
 
 export const EvenPosition: Story = {
@@ -53,13 +60,13 @@ export const EvenPosition: Story = {
     date: 'June 2025',
     description: 'This card is in an even position.',
     row: 1,
-    isOdd: false
+    isOdd: false,
   },
   render: (args) => (
     <div style={{ display: 'grid', maxWidth: '800px', margin: '0 auto' }}>
       <Card {...args} />
     </div>
-  )
+  ),
 };
 
 export const WithChildren: Story = {
@@ -67,7 +74,7 @@ export const WithChildren: Story = {
     title: 'Card with Children',
     date: 'July 2025',
     row: 1,
-    isOdd: true
+    isOdd: true,
   },
   render: (args) => (
     <div style={{ display: 'grid', maxWidth: '800px', margin: '0 auto' }}>
@@ -76,33 +83,33 @@ export const WithChildren: Story = {
         <p>You can add multiple elements as children.</p>
       </Card>
     </div>
-  )
+  ),
 };
 
 export const Timeline: Story = {
   render: () => (
     <div style={{ display: 'grid', maxWidth: '800px', margin: '0 auto' }}>
-      <Card 
-        title="First Event" 
-        date="January 2025" 
-        description="This is the first event in our timeline."
+      <Card
+        title='First Event'
+        date='January 2025'
+        description='This is the first event in our timeline.'
         row={1}
         isOdd={true}
       />
-      <Card 
-        title="Second Event" 
-        date="February 2025" 
-        description="This is the second event in our timeline."
+      <Card
+        title='Second Event'
+        date='February 2025'
+        description='This is the second event in our timeline.'
         row={2}
         isOdd={false}
       />
-      <Card 
-        title="Third Event" 
-        date="March 2025" 
-        description="This is the third event in our timeline."
+      <Card
+        title='Third Event'
+        date='March 2025'
+        description='This is the third event in our timeline.'
         row={3}
         isOdd={true}
       />
     </div>
-  )
+  ),
 };

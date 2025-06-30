@@ -1,6 +1,6 @@
 export const VARIANTS_MAP = {
-  primary: "primary",
-  secondary: "secondary",
+  primary: 'primary',
+  secondary: 'secondary',
 } as const;
 
 export type Variants = keyof typeof VARIANTS_MAP;
@@ -15,7 +15,7 @@ export interface ButtonProps {
   /** Manually defined width. */
   width?: number | string;
   /** Type of the button. */
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
   /** Text of the button. */
   text?: string;
   /** Additional class names */

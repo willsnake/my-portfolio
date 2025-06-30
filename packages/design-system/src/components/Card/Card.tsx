@@ -1,18 +1,18 @@
+import { cv } from 'css-variants';
 import { FunctionComponent } from 'preact';
-import { cv } from 'css-variants'
 import { CardProps } from './types';
 
 /**
  * Card component
- * 
+ *
  * @param props - Card properties
  * @returns Card component
  */
 export const Card: FunctionComponent<CardProps> = ({
-  title = "Card Title",
-  date = "current",
-  description = "Card Description",
-  className = "",
+  title = 'Card Title',
+  date = 'current',
+  description = 'Card Description',
+  className = '',
   row = 1,
   isOdd = true,
   style = {},
@@ -30,7 +30,7 @@ export const Card: FunctionComponent<CardProps> = ({
     },
     defaultVariants: {
       position: 'even',
-    }
+    },
   });
 
   const ballClasses = cv({
@@ -43,7 +43,7 @@ export const Card: FunctionComponent<CardProps> = ({
     },
     defaultVariants: {
       position: 'even',
-    }
+    },
   });
 
   const titleClasses = cv({
@@ -56,34 +56,24 @@ export const Card: FunctionComponent<CardProps> = ({
     },
     defaultVariants: {
       position: 'even',
-    }
+    },
   });
 
   // Combine all styles
   const combinedStyle = {
     gridRowStart: row,
     gridRowEnd: row + 1,
-    ...style
+    ...style,
   };
 
   const position = isOdd ? 'odd' : 'even';
 
   return (
-    <div
-      class={cardClasses({ position, className })}
-      style={combinedStyle}
-      {...rest}
-    >
-      <div
-        class={ballClasses({ position })}
-      />
-      <h3
-        class={titleClasses({ position })}
-      >
-        {title}
-      </h3>
-      <p class="text-gray text-sm font-medium">{date}</p>
-      <p class="text-primary">{description || children}</p>
+    <div class={cardClasses({ position, className })} style={combinedStyle} {...rest}>
+      <div class={ballClasses({ position })} />
+      <h3 class={titleClasses({ position })}>{title}</h3>
+      <p class='text-gray text-sm font-medium'>{date}</p>
+      <p class='text-primary'>{description || children}</p>
     </div>
   );
 };
