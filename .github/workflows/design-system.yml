@@ -11,7 +11,7 @@ jobs:
     name: Design System Build, Test and Deploy
     runs-on: ubuntu-latest
     # Only run when detect-changes workflow triggers it and design-system changes detected
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2
@@ -54,15 +54,11 @@ jobs:
         run: pnpm install
 
       # Run linting and formatting
-      - name: Lint Design System
+      - name: Format and Lint Design System
         if: steps.check-changes.outputs.changes == 'true'
         working-directory: ./packages/design-system
         run: |
-          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
-            pnpm lint
-          else
-            echo "No lint script found in package.json, skipping"
-          fi
+          pnpm format:lint
 
       # Build Storybook
       - name: Build Storybook
@@ -78,28 +74,9 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env staging --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload --env="" --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
-    
-
-      - name: print wrangler command output
-        env:
-          CMD_OUTPUT: ${{ steps.version-upload.outputs.deployment-url }}
-        run: echo $CMD_OUTPUT
-
-      # Deploy to Cloudflare Workers
-    #   - name: Deploy to Cloudflare Workers
-    #     if: steps.check-changes.outputs.changes == 'true'
-    #     id: deploy
-    #     env:
-    #       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-    #       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-    #     working-directory: ./packages/design-system
-    #     run: |
-    #       DEPLOY_OUTPUT=$(pnpm deploy 2>&1 || exit 1)
-    #       PREVIEW_URL=$(echo "$DEPLOY_OUTPUT" | grep -o 'https://[^ ]*workers.dev')
-    #       echo "preview_url=$PREVIEW_URL" >> $GITHUB_OUTPUT
           
     #   Check if a comment already exists
       - name: Find comment
