@@ -3,7 +3,8 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": false,
-    "experimentalScannerIgnores": ["node_modules", "dist", ".github", ".changeset"]
+    "experimentalScannerIgnores": ["node_modules", "dist", ".github", ".changeset", "storybook-static"],
+    "includes": ["**", "!**/dist", "!**/node_modules", "!**/.github", "!**/.changeset", "!**/storybook-static"]
   },
   "formatter": {
     "enabled": true,
@@ -116,8 +117,7 @@
         "noWith": "error",
         "useGetterReturn": "error"
       }
-    },
-    "includes": ["**", "!**/dist", "!**/node_modules", "!**/.github", "!**/.changeset"]
+    }
   },
   "overrides": [
     {
