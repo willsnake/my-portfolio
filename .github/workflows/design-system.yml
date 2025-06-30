@@ -1,6 +1,11 @@
 name: Design System Workflow
 
 on:
+  pull_request:
+    paths:
+      - 'packages/design-system/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/design-system.yml'
   workflow_run:
     workflows: [Detect Changes]
     types:
@@ -10,8 +15,10 @@ jobs:
   design-system:
     name: Design System Build, Test and Deploy
     runs-on: ubuntu-latest
-    # Only run when detect-changes workflow triggers it and design-system changes detected
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Skip duplicate runs on PR events when detect-changes will also trigger this
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      (github.event_name == 'pull_request')
     steps:
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2
@@ -54,15 +61,11 @@ jobs:
         run: pnpm install
 
       # Run linting and formatting
-      - name: Lint Design System
+      - name: Format and Lint Design System
         if: steps.check-changes.outputs.changes == 'true'
         working-directory: ./packages/design-system
         run: |
-          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
-            pnpm lint
-          else
-            echo "No lint script found in package.json, skipping"
-          fi
+          pnpm format:lint
 
       # Build Storybook
       - name: Build Storybook
@@ -78,7 +81,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env staging --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           
