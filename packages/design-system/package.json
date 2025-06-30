@@ -3,11 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build",
-    "preview": "vite preview",
-    "dev": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "deploy": "storybook build && wrangler deploy"
+    "deploy": "wrangler deploy",
+    "dev": "storybook dev -p 6006",
+    "format": "biome format --write",
+    "format:lint": "biome check --write",
+    "lint": "biome lint --write"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",

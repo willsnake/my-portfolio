@@ -49,7 +49,8 @@ export const Secondary: Story = {
 export const LongText: Story = {
   args: {
     variant: 'primary',
-    children: 'This is a longer text example to demonstrate how the Text component handles multiple lines of content. It should wrap naturally and maintain proper styling throughout.',
+    children:
+      'This is a longer text example to demonstrate how the Text component handles multiple lines of content. It should wrap naturally and maintain proper styling throughout.',
   },
   parameters: {
     layout: 'padded',
@@ -68,18 +69,14 @@ export const WithCustomClass: Story = {
 // All variants showcase
 export const AllVariants: Story = {
   render: () => (
-    <div className="space-y-4">
+    <div className='space-y-4'>
       <div>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Primary</h3>
-        <Text variant="primary">
-          Primary text variant - default styling for regular content
-        </Text>
+        <h3 className='text-sm font-medium text-gray-900 mb-2'>Primary</h3>
+        <Text variant='primary'>Primary text variant - default styling for regular content</Text>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-gray-900 mb-2">Secondary</h3>
-        <Text variant="secondary">
-          Secondary text variant - lighter styling for secondary content
-        </Text>
+        <h3 className='text-sm font-medium text-gray-900 mb-2'>Secondary</h3>
+        <Text variant='secondary'>Secondary text variant - lighter styling for secondary content</Text>
       </div>
     </div>
   ),
@@ -93,7 +90,7 @@ export const Interactive: Story = {
   args: {
     variant: 'primary',
     children: 'Click to interact with this text',
-    onClick: () => alert("Text clicked!"),
+    onClick: () => alert('Text clicked!'),
     style: { cursor: 'pointer' },
   },
 };

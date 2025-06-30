@@ -1,23 +1,23 @@
 ---
-type Variants = "primary" | "secondary" | "tertiary";
+type Variants = 'primary' | 'secondary' | 'tertiary';
 
 interface Props {
   variant: Variants;
   classes?: string;
 }
 
-const { variant = "primary", classes = "" } = Astro.props as Props;
+const { variant = 'primary', classes = '' } = Astro.props as Props;
 
-let textColor: string = "";
+let _textColor = '';
 switch (variant) {
-  case "secondary":
-    textColor = "dark-blue";
+  case 'secondary':
+    _textColor = 'dark-blue';
     break;
-  case "tertiary":
-    textColor = "dark-gray";
+  case 'tertiary':
+    _textColor = 'dark-gray';
     break;
   default:
-    textColor = "dark-white";
+    _textColor = 'dark-white';
     break;
 }
 ---

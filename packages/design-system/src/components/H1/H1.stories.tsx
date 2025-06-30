@@ -52,17 +52,17 @@ export const WithCustomClass: Story = {
 // Multiple examples
 export const Examples: Story = {
   render: () => (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">Default</h3>
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>Default</h3>
         <H1>Welcome to the Portfolio</H1>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">With Custom Styling</h3>
-        <H1 className="text-blue">Featured Project</H1>
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>With Custom Styling</h3>
+        <H1 className='text-blue'>Featured Project</H1>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">Long Text</h3>
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>Long Text</h3>
         <H1>A Very Long Heading That Demonstrates How Text Wraps Naturally</H1>
       </div>
     </div>

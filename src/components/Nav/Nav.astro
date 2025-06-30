@@ -1,12 +1,11 @@
 ---
-import sortBy from "lodash.sortby";
-import links from "./links.json";
+import sortBy from 'lodash.sortby';
+import links from './links.json';
 
-const sortedLinks = sortBy(links, "order");
-const enabledLinks = sortedLinks.filter((link) => !link.disabled);
+const sortedLinks = sortBy(links, 'order');
+const _enabledLinks = sortedLinks.filter((link) => !link.disabled);
 
-let baseClass =
-  "block absolute h-0.5 w-full bg-dark-white transform transition duration-500 ease-in-out";
+let _baseClass = 'block absolute h-0.5 w-full bg-dark-white transform transition duration-500 ease-in-out';
 ---
 
 <div

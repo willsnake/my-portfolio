@@ -1,11 +1,6 @@
 ---
-// Component imports
-import { SEO } from "astro-seo";
 // Style imports
-import "@styles/global.scss";
-// import "@style/tailwind.css";
-// Helper imports
-import { seoConfig } from "@utils/seoConfig";
+import '@styles/global.scss';
 // Props
 export interface Props {
   /** Title of the page. */
@@ -22,13 +17,7 @@ export interface Props {
   /** Whether or not to disable indexing */
   disableIndexing?: boolean;
 }
-const {
-  title,
-  ogTitle,
-  description,
-  image,
-  disableIndexing = false,
-} = Astro.props as Props;
+const { title, ogTitle, description, image, disableIndexing = false } = Astro.props as Props;
 ---
 
 <html lang="en" class="motion-safe:scroll-smooth">

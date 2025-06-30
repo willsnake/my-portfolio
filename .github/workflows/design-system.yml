@@ -11,7 +11,7 @@ jobs:
     name: Design System Build, Test and Deploy
     runs-on: ubuntu-latest
     # Only run when detect-changes workflow triggers it and design-system changes detected
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2
@@ -40,6 +40,23 @@ jobs:
             echo "No Design System changes detected, skipping workflow"
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
+      
+      # Report pending status at start
+      - name: Report pending status
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'pending',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'Design System workflow running...',
+              context: 'Design System Build, Test and Deploy'
+            });
 
       - name: Setup Mise
         if: steps.check-changes.outputs.changes == 'true'
@@ -54,15 +71,11 @@ jobs:
         run: pnpm install
 
       # Run linting and formatting
-      - name: Lint Design System
+      - name: Format and Lint Design System
         if: steps.check-changes.outputs.changes == 'true'
         working-directory: ./packages/design-system
         run: |
-          if [ -f "package.json" ] && grep -q '"lint"' package.json; then
-            pnpm lint
-          else
-            echo "No lint script found in package.json, skipping"
-          fi
+          pnpm format:lint
 
       # Build Storybook
       - name: Build Storybook
@@ -78,7 +91,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env staging --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload -e="" --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           
@@ -122,3 +135,54 @@ jobs:
             🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
             
             Last updated: ${{ github.event.workflow_run.updated_at }}
+
+      # Report success status to PR
+      - name: Report success status
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'success',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'Design System build and deploy completed',
+              context: 'Design System Build, Test and Deploy'
+            });
+      
+      # Report failure status if job fails
+      - name: Report failure status
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'failure',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'Design System build failed',
+              context: 'Design System Build, Test and Deploy'
+            });
+
+      # Report skipped status when no changes
+      - name: Report skipped status
+        if: steps.check-changes.outputs.changes == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'success',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'No Design System changes detected',
+              context: 'Design System Build, Test and Deploy'
+            });
