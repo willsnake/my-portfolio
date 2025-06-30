@@ -76,13 +76,6 @@ jobs:
         working-directory: ./packages/design-system
         run: |
           pnpm format:lint
-
-      # Build Storybook
-      - name: Build Storybook
-        if: steps.check-changes.outputs.changes == 'true'
-        working-directory: ./packages/design-system
-        run: |
-          pnpm build-storybook
     
       - uses: cloudflare/wrangler-action@v3
         if: steps.check-changes.outputs.changes == 'true'
