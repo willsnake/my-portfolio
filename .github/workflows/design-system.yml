@@ -1,11 +1,6 @@
 name: Design System Workflow
 
 on:
-  pull_request:
-    paths:
-      - 'packages/design-system/**'
-      - 'pnpm-lock.yaml'
-      - '.github/workflows/design-system.yml'
   workflow_run:
     workflows: [Detect Changes]
     types:
@@ -15,10 +10,7 @@ jobs:
   design-system:
     name: Design System Build, Test and Deploy
     runs-on: ubuntu-latest
-    # Skip duplicate runs on PR events when detect-changes will also trigger this
-    if: |
-      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
-      (github.event_name == 'pull_request')
+    if: github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Download workflow artifact
         uses: dawidd6/action-download-artifact@v2
@@ -81,7 +73,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload --env="" --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           
