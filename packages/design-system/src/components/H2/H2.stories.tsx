@@ -68,18 +68,18 @@ export const WithCustomClass: Story = {
 // All variants showcase
 export const AllVariants: Story = {
   render: () => (
-    <div className="space-y-6">
+    <div className='space-y-6'>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">Primary (Dark White)</h3>
-        <H2 variant="primary">About My Experience</H2>
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>Primary (Dark White)</h3>
+        <H2 variant='primary'>About My Experience</H2>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">Secondary (Dark Blue)</h3>
-        <H2 variant="secondary">Featured Projects</H2>
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>Secondary (Dark Blue)</h3>
+        <H2 variant='secondary'>Featured Projects</H2>
       </div>
       <div>
-        <h3 className="text-sm font-medium text-gray-600 mb-2">With Custom Styling</h3>
-        <H2 variant="primary" className="text-center border-b border-gray-200 pb-2">
+        <h3 className='text-sm font-medium text-gray-600 mb-2'>With Custom Styling</h3>
+        <H2 variant='primary' className='text-center border-b border-gray-200 pb-2'>
           Skills & Technologies
         </H2>
       </div>

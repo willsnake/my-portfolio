@@ -26,6 +26,16 @@
       "trailingCommas": "es5"
     }
   },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "lineEnding": "lf",
+      "lineWidth": 120,
+      "quoteStyle": "single"
+    }
+  },
   "json": {
     "formatter": {
       "trailingCommas": "none"
@@ -117,13 +127,17 @@
       }
     },
     {
-      "includes": ["**/*.astro"],
+      "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
       "javascript": { "globals": ["Astro"] },
       "linter": {
         "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
           "correctness": {
-            "noUnusedImports": "error",
-            "noUnusedVariables": "error"
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
           }
         }
       }

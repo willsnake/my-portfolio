@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/preact-vite";
-import { ProjectCard } from "./ProjectCard";
+import type { Meta, StoryObj } from '@storybook/preact-vite';
+import { ProjectCard } from './ProjectCard';
 
 const meta: Meta<typeof ProjectCard> = {
-  title: "Design System/ProjectCard",
+  title: 'Design System/ProjectCard',
   component: ProjectCard,
   parameters: {
     layout: 'centered',
@@ -10,19 +10,19 @@ const meta: Meta<typeof ProjectCard> = {
   tags: ['autodocs'],
   argTypes: {
     title: {
-      control: "text",
+      control: 'text',
     },
     description: {
-      control: "text",
+      control: 'text',
     },
     projectLink: {
-      control: "text",
+      control: 'text',
     },
     topics: {
-      control: "object",
+      control: 'object',
     },
     className: {
-      control: "text",
+      control: 'text',
     },
   },
 };
@@ -33,37 +33,38 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: "Project Card Title",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    projectLink: "#",
-    topics: ["React", "TypeScript"],
+    title: 'Project Card Title',
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.',
+    projectLink: '#',
+    topics: ['React', 'TypeScript'],
   },
 };
 
 export const WithMultipleTopics: Story = {
   args: {
-    title: "Multi-Topic Project",
-    description: "This is a project with multiple technologies and topics.",
-    projectLink: "https://github.com/username/project",
-    topics: ["React", "TypeScript", "GraphQL", "Node.js", "PostgreSQL"],
+    title: 'Multi-Topic Project',
+    description: 'This is a project with multiple technologies and topics.',
+    projectLink: 'https://github.com/username/project',
+    topics: ['React', 'TypeScript', 'GraphQL', 'Node.js', 'PostgreSQL'],
   },
 };
 
 export const WithLongDescription: Story = {
   args: {
-    title: "Detailed Project",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget.",
-    projectLink: "#",
-    topics: ["React", "Firebase"],
+    title: 'Detailed Project',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget. Nullam euismod, nisl eget ultricies ultricies, nisl nisl ultricies nisl, nec ultricies nisl nisl eget.',
+    projectLink: '#',
+    topics: ['React', 'Firebase'],
   },
 };
 
 export const WithCustomClass: Story = {
   args: {
-    title: "Custom Styled Project",
-    description: "A project card with custom styling",
-    projectLink: "#",
-    topics: ["Design", "UI/UX"],
-    className: "border border-dark-blue rounded-lg",
+    title: 'Custom Styled Project',
+    description: 'A project card with custom styling',
+    projectLink: '#',
+    topics: ['Design', 'UI/UX'],
+    className: 'border border-dark-blue rounded-lg',
   },
 };
