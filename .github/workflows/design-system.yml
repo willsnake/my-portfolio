@@ -1,6 +1,11 @@
 name: Design System Workflow
 
 on:
+  pull_request:
+    paths:
+      - 'packages/design-system/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/design-system.yml'
   workflow_run:
     workflows: [Detect Changes]
     types:
