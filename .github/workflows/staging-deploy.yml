@@ -1,7 +1,10 @@
 name: Deploy to Staging
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Version Bump (Pre-release)"]
+    types:
+      - completed
     branches:
       - develop
 
@@ -38,3 +41,24 @@ jobs:
           command: deploy --env="" --minify --upload-source-maps
           wranglerVersion: "4.22.0"
           packageManager: pnpm
+          
+      # Create GitHub tag and release for the deployment
+      - name: Read Design System Version
+        id: ds-version
+        run: |
+          VERSION=$(jq -r .version ./packages/design-system/package.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Create GitHub Tag and Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Design System v${{ steps.ds-version.outputs.version }} (Staging)"
+          tag_name: "ds-v${{ steps.ds-version.outputs.version }}"
+          draft: false
+          prerelease: true
+          generate_release_notes: true
+          body: |
+            Automatic deployment to Design System staging v${{ steps.ds-version.outputs.version }}.
+            Date: $(date +'%Y-%m-%d %H:%M:%S')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
