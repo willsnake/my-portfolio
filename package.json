@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.10.0",
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
+    "@changesets/cli": "^2.29.5",
     "turbo": "2.5.3",
     "wrangler": "4.22.0"
   }
