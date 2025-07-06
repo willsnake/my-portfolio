@@ -1,13 +1,8 @@
 import { cv } from 'css-variants';
 import { FunctionComponent, useState } from 'preact/compat';
-// import sortBy from "lodash.sortby";
 import { sort } from 'radash';
 import defaultLinks from './links.json';
 import type { NavProps } from './types';
-
-const _sortBy = (key) => {
-  return (a, b) => (a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0);
-};
 
 /**
  * Nav component
