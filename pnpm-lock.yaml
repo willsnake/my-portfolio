@@ -38,6 +38,12 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.6
         version: 4.1.6(vite@6.3.5(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(sass@1.88.0)(terser@5.39.0)(yaml@2.7.1))
+      '@ws-portfolio/fonts':
+        specifier: workspace:*
+        version: link:../fonts
+      '@ws-portfolio/styling':
+        specifier: workspace:*
+        version: link:../styling
       css-variants:
         specifier: ^2.1.0
         version: 2.1.0
@@ -78,6 +84,17 @@ importers:
       vite:
         specifier: ^6.0.4
         version: 6.3.5(@types/node@22.15.17)(jiti@2.4.2)(lightningcss@1.29.3)(sass@1.88.0)(terser@5.39.0)(yaml@2.7.1)
+
+  packages/fonts: {}
+
+  packages/styling:
+    dependencies:
+      '@ws-portfolio/fonts':
+        specifier: workspace:*
+        version: link:../fonts
+      tailwindcss:
+        specifier: ^4.1.6
+        version: 4.1.6
 
 packages:
 
