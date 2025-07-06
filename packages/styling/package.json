@@ -1,5 +1,6 @@
 {
   "name": "@ws-portfolio/styling",
+  "version": "0.0.1",
   "description": "This is a private package that centralizes the styling configuration for the portfolio project using Tailwind CSS v4. It provides a unified theming system with custom color variables in OKLCH format, typography settings, and global styles. This package manages design tokens, imports font resources from @ws-portfolio/fonts, and establishes consistent styling patterns to ensure visual coherence across all portfolio components and applications.",
   "private": true,
   "type": "module",
