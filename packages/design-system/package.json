@@ -11,6 +11,8 @@
     "lint": "biome lint --write"
   },
   "dependencies": {
+    "@ws-portfolio/styling": "workspace:*",
+    "@ws-portfolio/fonts": "workspace:*",
     "@tailwindcss/vite": "^4.1.6",
     "css-variants": "^2.1.0",
     "preact": "^10.25.3",
