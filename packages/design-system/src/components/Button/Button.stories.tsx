@@ -46,6 +46,9 @@ export const Primary: Story = {
 };
 
 export const Secondary: Story = {
+  globals: {
+    backgrounds: { value: 'light' },
+  },
   args: {
     variant: 'secondary',
     text: 'Secondary Button',
@@ -62,6 +65,9 @@ export const WithCustomWidth: Story = {
 };
 
 export const AllVariants: Story = {
+  globals: {
+    backgrounds: { value: 'light' },
+  },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {Object.keys(VARIANTS_MAP).map((variant) => (
