@@ -75,6 +75,9 @@ export const WithCustomClass: Story = {
 
 // All variants showcase
 export const AllVariants: Story = {
+  globals: {
+    backgrounds: { value: 'grey' },
+  },
   render: () => (
     <div className='space-y-6'>
       <div>
@@ -91,7 +94,7 @@ export const AllVariants: Story = {
       </div>
       <div>
         <h4 className='text-sm font-medium text-gray-600 mb-2'>With Custom Styling</h4>
-        <H3 variant='primary' className='text-center bg-gray-100 p-4 rounded'>
+        <H3 variant='primary' className='text-center bg-black p-4 rounded'>
           Featured Highlight
         </H3>
       </div>

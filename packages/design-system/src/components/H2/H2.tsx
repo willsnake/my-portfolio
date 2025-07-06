@@ -10,10 +10,10 @@ import type { H2Props } from './types';
  */
 export const H2: FunctionComponent<H2Props> = ({ variant = 'primary', className = '', children, ...rest }) => {
   const classNames = cv({
-    base: 'text-[32px] leading-[42px] tracking-[1px]',
+    base: 'font-ibm-plex-mono text-[32px] leading-[42px] tracking-[1px]',
     variants: {
       color: {
-        primary: 'text-dark-white',
+        primary: 'text-white',
         secondary: 'text-dark-blue',
       },
     },

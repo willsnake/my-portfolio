@@ -39,6 +39,9 @@ export const Primary: Story = {
 
 // Secondary variant
 export const Secondary: Story = {
+  globals: {
+    backgrounds: { value: 'dark' },
+  },
   args: {
     variant: 'secondary',
     children: 'This is secondary text content',

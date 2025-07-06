@@ -5,6 +5,9 @@ import type { H1Props } from './types';
 const meta: Meta<H1Props> = {
   title: 'Design System/H1',
   component: H1,
+  globals: {
+    backgrounds: { value: 'grey' },
+  },
   parameters: {
     layout: 'centered',
   },

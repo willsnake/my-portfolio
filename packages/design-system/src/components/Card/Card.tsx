@@ -47,7 +47,7 @@ export const Card: FunctionComponent<CardProps> = ({
   });
 
   const titleClasses = cv({
-    base: 'text-tertiary absolute top-[-8px]',
+    base: 'text-dark-gray absolute text-xl top-[-8px]',
     variants: {
       position: {
         odd: 'lg:right-[30px]',
@@ -73,7 +73,7 @@ export const Card: FunctionComponent<CardProps> = ({
       <div class={ballClasses({ position })} />
       <h3 class={titleClasses({ position })}>{title}</h3>
       <p class='text-gray text-sm font-medium'>{date}</p>
-      <p class='text-primary'>{description || children}</p>
+      <p class='text-gray text-base'>{description || children}</p>
     </div>
   );
 };

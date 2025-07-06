@@ -10,10 +10,10 @@ import type { H3Props } from './types';
  */
 export const H3: FunctionComponent<H3Props> = ({ variant = 'primary', className = '', children, ...rest }) => {
   const classNames = cv({
-    base: 'font-medium text-xl',
+    base: 'font-ibm-plex-mono font-medium text-xl',
     variants: {
       color: {
-        primary: 'text-dark-white',
+        primary: 'text-white',
         secondary: 'text-dark-blue',
         tertiary: 'text-dark-gray',
       },
