@@ -2,7 +2,14 @@
   "name": "@ws-portfolio/design-system",
   "private": true,
   "type": "module",
+  "main": "./dist/design-system.umd.js",
+  "module": "./dist/design-system.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly",
     "build-storybook": "storybook build",
     "deploy": "wrangler deploy",
     "dev": "storybook dev -p 6006",

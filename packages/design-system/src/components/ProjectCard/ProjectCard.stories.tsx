@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { ProjectCard } from './ProjectCard';
+import type { ProjectCardProps } from './types';
 
-const meta: Meta<typeof ProjectCard> = {
+const meta: Meta<ProjectCardProps> = {
   title: 'Design System/ProjectCard',
   component: ProjectCard,
   parameters: {
@@ -28,8 +29,7 @@ const meta: Meta<typeof ProjectCard> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<ProjectCardProps>;
 
 export const Default: Story = {
   args: {

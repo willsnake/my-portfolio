@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from '@storybook/preact-vite';
 import { Card } from './Card';
+import type { CardProps } from './types';
 
-const meta = {
+const meta: Meta<CardProps> = {
   title: 'Design System/Card',
   component: Card,
   globals: {
@@ -30,10 +31,10 @@ const meta = {
       description: 'Whether the card is in an odd position (affects styling)',
     },
   },
-} satisfies Meta<typeof Card>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<CardProps>;
 
 export const Default: Story = {
   args: {
