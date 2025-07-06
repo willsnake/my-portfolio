@@ -10,7 +10,7 @@ import type { H1Props } from './types';
  */
 export const H1: FunctionComponent<H1Props> = ({ className = '', children, ...rest }) => {
   const classNames = cv({
-    base: 'font-medium text-dark-white text-[40px] leading-[52px]',
+    base: 'font-ibm-plex-mono font-medium text-white text-[40px] leading-[52px]',
   });
 
   return (
