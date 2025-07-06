@@ -1,3 +1,5 @@
+import { JSX } from 'preact';
+
 export const VARIANTS_MAP = {
   primary: 'primary',
   secondary: 'secondary',
@@ -5,7 +7,7 @@ export const VARIANTS_MAP = {
 
 export type Variants = keyof typeof VARIANTS_MAP;
 
-export interface ButtonProps {
+export interface ButtonProps extends JSX.HTMLAttributes<HTMLButtonElement> {
   /** Is the button currently disabled. */
   disabled?: boolean;
   /** Click handler for the button. */
