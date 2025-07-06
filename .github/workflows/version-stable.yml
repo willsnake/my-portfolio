@@ -1,0 +1,90 @@
+name: Version Bump (Stable)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-changes:
+    name: Detect Changed Packages
+    runs-on: ubuntu-latest
+    outputs:
+      design-system: ${{ steps.filter.outputs.design-system }}
+      new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter for changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            design-system:
+              - 'packages/design-system/**'
+            new-portfolio:
+              - 'apps/new-portfolio/**'
+
+  version-bump:
+    name: Version Bump with Changesets (Stable)
+    needs: detect-changes
+    if: ${{ needs.detect-changes.outputs.design-system == 'true' || needs.detect-changes.outputs.new-portfolio == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Git User
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+      - name: Exit Pre-release Mode (if needed)
+        run: pnpm changeset pre exit
+
+      - name: Create Stable Version Pull Request
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "chore: version packages (stable)"
+          title: "chore: version packages (stable)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output Version Changes
+        if: steps.changesets.outputs.hasChangesets == 'true'
+        run: |
+          echo "✅ Pull Request created with stable version changes!"
+          echo "Updated packages: ${{ steps.changesets.outputs.publishedPackages }}"
