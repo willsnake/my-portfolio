@@ -1,0 +1,28 @@
+@import '@ws-portfolio/fonts/fonts.css';
+
+* {
+  font-family: 'IBM Plex Mono';
+}
+
+body {
+  font-family: 'IBM Plex Sans';
+}
+
+@import 'tailwindcss';
+
+@theme {
+  --color-black-blue: oklch(17.76% 0 0); /* #111111 */
+  --color-black: oklch(0.00% 0 0); /* #000000 */
+  --color-blue: oklch(59.13% 0.214 258.31); /* #1076f9 */
+  --color-dark-blue: oklch(42.61% 0.102 255.8); /* #254f85 */
+  --color-dark-gray: oklch(32.11% 0 0); /* #333333 */
+  --color-dark-white: oklch(98.51% 0 0); /* #fafafa */
+  --color-gray: oklch(51.03% 0 0); /* #666666 */
+  --color-light-gray: oklch(68.30% 0 0); /* #999999 */
+  --color-lightest-gray: oklch(93.70% 0 0); /* #eaeaea */
+  --color-transparent: transparent;
+  --color-white: oklch(100.00% 0 0); /* #ffffff */
+  --font-ibm-plex-sans: 'IBM Plex Sans', sans-serif;
+  --font-ibm-plex-mono: 'IBM Plex Mono', monospace;
+  --shadow-card-blog: 0px 5px 14px oklch(0 0 360); /* #000000 */
+}
