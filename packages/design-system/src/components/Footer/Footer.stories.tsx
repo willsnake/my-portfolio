@@ -87,10 +87,13 @@ export const WithCustomStyling: Story = {
 
 // In context (simulated page)
 export const InContext: Story = {
+  globals: {
+    backgrounds: { value: 'grey' },
+  },
   render: () => (
-    <div className='min-h-screen flex flex-col bg-black'>
+    <div className='min-h-screen flex flex-col'>
       {/* Simulated page content */}
-      <div className='flex-1 bg-black p-8'>
+      <div className='flex-1 p-8'>
         <div className='max-w-4xl mx-auto'>
           <h1 className='text-3xl font-bold text-gray-900 mb-6'>Page Content</h1>
           <p className='text-gray-600 mb-4'>This is a simulated page to show how the footer appears in context.</p>

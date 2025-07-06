@@ -4,6 +4,9 @@ import { Card } from './Card';
 const meta = {
   title: 'Design System/Card',
   component: Card,
+  globals: {
+    backgrounds: { value: 'light' },
+  },
   tags: ['autodocs'],
   argTypes: {
     title: {
