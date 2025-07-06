@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { Link } from './Link';
+import type { LinkProps } from './types';
 
-const meta: Meta<typeof Link> = {
+const meta: Meta<LinkProps> = {
   title: 'Design System/Link',
   component: Link,
   tags: ['autodocs'],
@@ -29,8 +30,7 @@ const meta: Meta<typeof Link> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<LinkProps>;
 
 export const Default: Story = {
   args: {

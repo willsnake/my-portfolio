@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/preact-vite';
 import { fn } from 'storybook/test';
 import { Button } from './Button';
-import { VARIANTS_MAP } from './types';
+import { type ButtonProps, VARIANTS_MAP } from './types';
 
-const meta = {
+const meta: Meta<ButtonProps> = {
   title: 'Design System/Button',
   component: Button,
   tags: ['autodocs'],
@@ -33,10 +33,10 @@ const meta = {
     onClick: { action: 'clicked' },
   },
   args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<ButtonProps>;
 
 export const Primary: Story = {
   args: {

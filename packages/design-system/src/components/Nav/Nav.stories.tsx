@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/preact-vite';
 import { Nav } from './Nav';
-import type { NavLink } from './types';
+import type { NavLink, NavProps } from './types';
 
-const meta: Meta<typeof Nav> = {
+const meta: Meta<NavProps> = {
   title: 'Design System/Nav',
   component: Nav,
   parameters: {
@@ -20,8 +20,7 @@ const meta: Meta<typeof Nav> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<NavProps>;
 
 export const Default: Story = {
   args: {
