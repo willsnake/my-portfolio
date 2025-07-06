@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/preact-vite';
-import '../src/global.css';
+import '@ws-portfolio/styling/global.css';
 
 const preview: Preview = {
   parameters: {
@@ -9,6 +9,16 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    backgrounds: {
+      options: {
+        dark: { name: 'Dark', value: '#333' },
+        light: { name: 'Light', value: '#F7F9F2' },
+        grey: { name: 'Grey', value: '#CCC' },
+      },
+    },
+  },
+  initialGlobals: {
+    backgrounds: { value: 'grey' },
   },
 };
 
