@@ -1,0 +1,43 @@
+---
+import { Button, H1, H3, Text } from '@ws-portfolio/design-system';
+
+// Props
+export interface Props {
+  /** Source for the hero image */
+  heroImage: string;
+}
+const { heroImage = '/hero-img.webp' } = Astro.props as Props;
+---
+
+<section
+  id="home"
+  class="px-6 lg:px-0 w-full h-[85vh] inline-flex bg-black-blue"
+>
+  <div class="hidden lg:block w-1/2 h-full">
+    <img
+      src={heroImage}
+      alt="An photo of me thinking in front of a laptop withe some coding books on the background"
+      class="w-full h-full"
+    />
+  </div>
+  <div
+    class="w-full lg:w-1/2 h-full flex flex-nowrap flex-row content-center justify-start items-center"
+  >
+    <div>
+      <H1 className="mb-1">Hi, I'm WillSnake!</H1>
+      <H3 variant="primary" className="mb-4">a.k.a. Daniel Rodríguez</H3>
+      <Text variant="secondary" className="mb-[24px]">
+        I'm a Full-Stack Engineer … React JS (cuáles otras tecnologías usas,
+        etc.)
+      </Text>
+      <div>
+        <Button
+          variant="primary"
+          style="margin-right: 6px;"
+          text="Contact me"
+        />
+        <Button variant="secondary" text="Download Resume" />
+      </div>
+    </div>
+  </div>
+</section>
