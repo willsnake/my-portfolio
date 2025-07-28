@@ -1,10 +1,6 @@
 @import 'tailwindcss';
 @import '@ws-portfolio/fonts/fonts.css';
 
-* {
-  font-family: 'IBM Plex Mono';
-}
-
 body {
   font-family: 'IBM Plex Sans';
 }
