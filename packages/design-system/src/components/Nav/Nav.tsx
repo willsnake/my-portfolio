@@ -24,7 +24,7 @@ export const Nav: FunctionComponent<NavProps> = ({
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navClasses = cv({
-    base: 'font-medium text-sm w-full bg-black-blue sticky top-0 text-dark-white z-10',
+    base: 'font-ibm-plex-mono font-medium text-sm w-full bg-black-blue sticky top-0 text-dark-white z-10',
   });
 
   const containerClasses = cv({

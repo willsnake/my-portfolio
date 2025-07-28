@@ -30,7 +30,7 @@ export const Button: FunctionComponent<ButtonProps> = ({
   };
 
   const classNames = cv({
-    base: 'rounded cursor-pointer text-sm font-medium py-3 px-4 min-h-[42px]',
+    base: 'font-ibm-plex-mono rounded cursor-pointer text-sm font-medium py-3 px-4 min-h-[42px]',
     variants: {
       color: {
         primary:
