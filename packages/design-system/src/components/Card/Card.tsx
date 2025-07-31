@@ -47,7 +47,7 @@ export const Card: FunctionComponent<CardProps> = ({
   });
 
   const titleClasses = cv({
-    base: 'text-dark-gray absolute text-xl top-[-8px]',
+    base: 'font-ibm-plex-mono text-dark-gray absolute text-xl top-[-8px]',
     variants: {
       position: {
         odd: 'lg:right-[30px]',
@@ -72,7 +72,7 @@ export const Card: FunctionComponent<CardProps> = ({
     <div class={cardClasses({ position, className })} style={combinedStyle} {...rest}>
       <div class={ballClasses({ position })} />
       <h3 class={titleClasses({ position })}>{title}</h3>
-      <p class='text-gray text-sm font-medium'>{date}</p>
+      <p class='font-ibm-plex-mono text-gray text-sm font-medium'>{date}</p>
       <p class='text-gray text-base'>{description || children}</p>
     </div>
   );
