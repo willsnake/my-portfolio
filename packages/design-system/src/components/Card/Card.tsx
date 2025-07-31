@@ -61,8 +61,8 @@ export const Card: FunctionComponent<CardProps> = ({
 
   // Combine all styles
   const combinedStyle = {
-    gridRowStart: row,
-    gridRowEnd: row + 1,
+    gridRowStart: `${row}`,
+    gridRowEnd: `${row + 1}`,
     ...style,
   };
 
