@@ -4,6 +4,7 @@ import '@styles/global.css';
 import Hero from '@components/Hero.astro';
 import Layout from '@layouts/Layout.astro';
 import About from '@pages/about.astro';
+import Experience from '@pages/experience.astro';
 import { Nav } from '@ws-portfolio/design-system';
 ---
 
@@ -11,4 +12,5 @@ import { Nav } from '@ws-portfolio/design-system';
  <Nav client:load />
  <Hero heroImage="/assets/hero-img.webp" />
  <About />
+ <Experience />
 </Layout>
