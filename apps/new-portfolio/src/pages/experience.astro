@@ -1,7 +1,7 @@
 ---
-import { H2, Card } from '@ws-portfolio/design-system';
+import { Card, H2 } from '@ws-portfolio/design-system';
 
-import jobs from './jobs.json'
+import jobs from './jobs.json';
 
 let _row = 2;
 ---
@@ -16,10 +16,12 @@ let _row = 2;
     Education & Experience
   </H2>
   <div class="lg:grid lg:grid-cols-2 lg:auto-rows-auto">
-    <div class="card relative w-full text-left px-[30px] flex flex-col pt-6 pb-8 gap-y-2 border-l border-blue ws-card last-of-type:border-0 lg:border-l-0 lg:text-right lg:border-r lg:ml-[1px] lg:col-start-1 lg:col-end-2" style="grid-row-start:1; grid-row-end:2; width: 10px;"></div>
+    <div class="relative lg:col-start-1 lg:col-end-3 flex justify-center row-start-[1] row-end-[2]">
+      <div class="w-[1px] h-12 border-r-[1px] border-blue"></div>
+    </div>
     {
       jobs.map(({ title, date, description }, index) => {
-        let row = index;
+        let row = index + 2;
         let classes = [];
         const isEven = index % 2;
         if (isEven == 0) {
@@ -29,7 +31,6 @@ let _row = 2;
           classes.push("lg:col-start-2");
           classes.push("lg:col-end-3");
         }
-        row++;
         return (
           <Card
             title={title}
