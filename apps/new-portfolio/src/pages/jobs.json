@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Salesloft",
+    "date": "2020 - today",
+    "description": "I worked as a Full Stack Developer, creating applications for different clients using React JS, Express JS, Koa JS, Mongo DB, Angular JS, PostgreSQL and Dynamo DB."
+  },
+  {
+    "title": "Scalable Press",
+    "date": "December 2018 - 2020",
+    "description": "Worked as a Full Stack Developer, creating a new application for the company using Graphql, Apollo, React JS, Mongo DB and Typescript. Use of AWS as Cloud Service using S3, EC2, EKS, Kubernetes, Kafka, Docker and Rabbit MQ."
+  },
+  {
+    "title": "iTexico",
+    "date": "May 2017 - December 2018",
+    "description": "Worked as a Full Stack Developer, creating applications for different clients using React JS, Express JS, Koa JS, Mongo DB, Angular JS, PostgreSQL and Dynamo DB. User of AWS and Google Cloud as cloud service, using Google Vision API, EC2, IAM roles, Cognito, ELB, Kubernetes, Rabbit MQ, Docker, S3, Cloudstack, Mongo Atlas, Google Storage, Google Pub/Sub."
+  },
+  {
+    "title": "Futurecommerce",
+    "date": "2016",
+    "description": "Worked as a Full Stack Developer creating an application for eCommerce using Koa JS, React JS, Mongo DB and PostgreSQL. Use of AWS as Cloud Service using S3, EC2, IAM ROLE, Cloud Cache, Elastic Search, ELB, Docker and Rabbit MQ."
+  },
+  {
+    "title": "Armonniza",
+    "date": "2014 - 2016",
+    "description": "Lead Developer on a GERP for Mexican Government, based on PHP, MariaDB, Javascript and Angular JS. Usage of SQL and NoSQL databases. Lead Developer for a software for pharmacies based on PHP, MariaDB, Javascript and Angular JS. Developer on mobile apps based on Xamarin Framework."
+  },
+  {
+    "title": "Bhacking",
+    "date": "2013 - 2014",
+    "description": "Secure Development of web and Android apps based on OWASP standards. Development of Augmented Reality apps. Audit source code. Developments based on PHP. Database modeling."
+  },
+  {
+    "title": "Master Degree",
+    "date": "2013 - 2015",
+    "description": "Software Development"
+  },
+  {
+    "title": "Bachelor Degree",
+    "date": "2010 - 2013",
+    "description": "Computer Systems Engineering"
+  }
+]
