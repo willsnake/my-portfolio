@@ -19,5 +19,5 @@ body {
   --color-white: oklch(100.00% 0 0); /* #ffffff */
   --font-ibm-plex-sans: 'IBM Plex Sans', sans-serif;
   --font-ibm-plex-mono: 'IBM Plex Mono', monospace;
-  --shadow-card-blog: 0px 5px 14px oklch(0 0 360); /* #000000 */
+  --shadow-card-blog: 0px 5px 14px rgba(0, 0, 0, 0.15); /* #000000 */
 }
