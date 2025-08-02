@@ -1,0 +1,37 @@
+---
+import type { Repositories } from '@customTypes';
+import { Octokit } from '@octokit/core';
+
+import { H2, ProjectCard } from '@ws-portfolio/design-system';
+
+const octokit = new Octokit({ auth: import.meta.env.PUBLIC_GH_TOKEN });
+
+const { data } = await octokit.request('GET /user/repos', {
+  sort: 'updated',
+  visibility: 'public',
+  per_page: 4,
+});
+---
+
+<section
+  id="projects"
+  class="w-full lg:container px-6 lg:px-auto lg:mx-auto pt-40 pb-20 bg-white flex flex-col content-center justify-center items-center text-center"
+>
+  <H2
+    variant="secondary"
+    className="mb-10 lg:row-start-1 lg:col-start-1 lg:row-end-2 lg:col-end-3"
+  >
+    Recent Projects
+  </H2>
+  {
+    data.map(({ name, description, html_url, topics }: Repositories) => (
+      <ProjectCard
+        key={name}
+        title={name}
+        topics={topics}
+        description={description}
+        projectLink={html_url}
+      />
+    ))
+  }
+</section>
