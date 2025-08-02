@@ -23,6 +23,7 @@ export default defineConfig({
         '@layouts': resolve('./src/layouts'),
         '@svgs': resolve('./src/assets/svgs'),
         '@utils': resolve('./src/utils'),
+        '@customTypes': resolve('./types.ts'),
       },
     },
     ssr: {
