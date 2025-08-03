@@ -89,7 +89,7 @@ jobs:
           workingDirectory: "./apps/new-portfolio"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env "" --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload --env="" --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           
