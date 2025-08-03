@@ -109,12 +109,8 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: 'versions upload --env="" --tag="${{ env.GITHUB_SHORT_SHA }}"'
-          secrets: |
-            PUBLIC_GH_TOKEN
           wranglerVersion: "4.22.0"
           packageManager: pnpm
-        env:
-          PUBLIC_GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
           
       # Check if a comment already exists
       - name: Find comment
