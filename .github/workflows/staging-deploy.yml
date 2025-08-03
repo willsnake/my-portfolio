@@ -79,6 +79,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+      
+      - name: Build Design System
+        run: pnpm --filter '@ws-portfolio/design-system' build
 
       # Run linting and testing
       - name: Lint and Test My Portfolio

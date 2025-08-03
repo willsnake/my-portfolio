@@ -69,6 +69,10 @@ jobs:
       - name: Install dependencies
         if: steps.check-changes.outputs.changes == 'true'
         run: pnpm install
+      
+      - name: Build Design System
+        if: steps.check-changes.outputs.changes == 'true'
+        run: pnpm --filter '@ws-portfolio/design-system' build
 
       # Run linting and formatting
       - name: Format and Lint New Portfolio
