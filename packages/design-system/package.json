@@ -1,0 +1,41 @@
+{
+  "name": "@ws-portfolio/design-system",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/design-system.umd.js",
+  "module": "./dist/design-system.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "build-storybook": "storybook build",
+    "deploy": "wrangler deploy",
+    "dev": "storybook dev -p 6006",
+    "format": "biome format --write",
+    "format:lint": "biome check --write",
+    "lint": "biome lint --write"
+  },
+  "dependencies": {
+    "@ws-portfolio/styling": "workspace:*",
+    "@ws-portfolio/fonts": "workspace:*",
+    "@tailwindcss/vite": "^4.1.6",
+    "css-variants": "^2.1.0",
+    "preact": "catalog:",
+    "radash": "^12.1.1",
+    "tailwindcss": "catalog:"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^4.0.1",
+    "@preact/preset-vite": "^2.9.3",
+    "@storybook/addon-themes": "^9.0.14",
+    "@storybook/preact-vite": "^9.0.14",
+    "storybook": "^9.0.14",
+    "typescript": "^5.8.3",
+    "vite": "catalog:",
+    "eslint-plugin-storybook": "9.0.14",
+    "@storybook/addon-vitest": "9.0.14"
+  }
+}

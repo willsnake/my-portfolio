@@ -1,0 +1,45 @@
+---
+import { Card, H2 } from '@ws-portfolio/design-system';
+
+import jobs from './jobs.json';
+---
+
+<section
+  class="w-full lg:px-auto lg:mx-auto px-6 lg:px-0 py-20 bg-dark-white flex flex-col content-center justify-center items-center text-center"
+>
+  <H2
+    variant="secondary"
+    className="mb-10 lg:row-start-1 lg:col-start-1 lg:row-end-2 lg:col-end-3"
+  >
+    Education & Experience
+  </H2>
+  <div class="lg:grid lg:grid-cols-2 lg:auto-rows-auto">
+    <div class="relative lg:col-start-1 lg:col-end-3 flex justify-center row-start-[1] row-end-[2]">
+      <div class="w-[1px] h-12 border-r-[1px] border-blue"></div>
+    </div>
+    {
+      jobs.map(({ title, date, description }, index) => {
+        let row = index + 2;
+        let classes = [];
+        const isEven = index % 2;
+        if (isEven == 0) {
+          classes.push("lg:col-start-1");
+          classes.push("lg:col-end-2");
+        } else {
+          classes.push("lg:col-start-2");
+          classes.push("lg:col-end-3");
+        }
+        return (
+          <Card
+            title={title}
+            date={date}
+            description={description}
+            className={classes.join(" ")}
+            row={row}
+            isOdd={!isEven}
+          />
+        );
+      })
+    }
+  </div>
+</section>

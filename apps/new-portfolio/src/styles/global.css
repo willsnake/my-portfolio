@@ -1,0 +1,3 @@
+@import '@ws-portfolio/styling/global.css';
+@source "../";
+@source "../../node_modules/@ws-portfolio/design-system/dist";

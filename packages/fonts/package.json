@@ -1,0 +1,18 @@
+{
+  "name": "@ws-portfolio/fonts",
+  "version": "0.0.1",
+  "description": "This is a private package that manages custom font assets for the portfolio website. It provides consistent typography resources across the design system and applications. This module exports font files and related configurations, enabling unified font usage throughout the project to maintain brand consistency and optimal text rendering.",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./fonts.css": "./fonts.css",
+    "./IBMPlexMono-Medium.ttf": "./IBMPlexMono-Medium.ttf",
+    "./IBMPlexSans-Regular.ttf": "./IBMPlexSans-Regular.ttf",
+    ".": "./fonts.css"
+  },
+  "files": [
+    "fonts.css",
+    "IBMPlexMono-Medium.ttf",
+    "IBMPlexSans-Regular.ttf"
+  ]
+}

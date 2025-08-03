@@ -1,0 +1,8 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+catalog:
+  preact: ^10.26.6
+  tailwindcss: ^4.1.11
+  vite: ^6.0.4

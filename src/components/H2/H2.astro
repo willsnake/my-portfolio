@@ -1,16 +1,16 @@
 ---
-type Variants = "primary" | "secondary";
+type Variants = 'primary' | 'secondary';
 
 interface Props {
   variant: Variants;
   classes?: string;
 }
 
-const { variant = "primary", classes = "" } = Astro.props as Props;
+const { variant = 'primary', classes = '' } = Astro.props as Props;
 
-let textColor: string = "dark-white";
-if (variant === "secondary") {
-  textColor = "dark-blue";
+let _textColor = 'dark-white';
+if (variant === 'secondary') {
+  _textColor = 'dark-blue';
 }
 ---
 

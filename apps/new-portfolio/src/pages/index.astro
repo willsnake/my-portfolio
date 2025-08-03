@@ -1,0 +1,22 @@
+---
+import '@styles/global.css';
+
+import Hero from '@components/Hero.astro';
+import Layout from '@layouts/Layout.astro';
+import About from '@pages/about.astro';
+import Blog from '@pages/blog.astro';
+import Footer from '@pages/contact.astro';
+import Experience from '@pages/experience.astro';
+import Projects from '@pages/projects.astro';
+import { Nav } from '@ws-portfolio/design-system';
+---
+
+<Layout title="WillSnake Portfolio" description="WillSnake: Developer">
+ <Nav client:load />
+ <Hero heroImage="/assets/hero-img.webp" />
+ <About />
+ <Experience />
+ <Projects />
+ <Blog />
+ <Footer />
+</Layout>

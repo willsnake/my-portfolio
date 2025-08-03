@@ -76,13 +76,6 @@ jobs:
         working-directory: ./packages/design-system
         run: |
           pnpm format:lint
-
-      # Build Storybook
-      - name: Build Storybook
-        if: steps.check-changes.outputs.changes == 'true'
-        working-directory: ./packages/design-system
-        run: |
-          pnpm build-storybook
     
       - uses: cloudflare/wrangler-action@v3
         if: steps.check-changes.outputs.changes == 'true'
@@ -91,7 +84,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: versions upload --env="" --tag="${{ env.GITHUB_SHORT_SHA }}"
+          command: versions upload -e="" --tag="${{ env.GITHUB_SHORT_SHA }}"
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           

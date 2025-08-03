@@ -1,0 +1,23 @@
+{
+  "name": "willsnake-design-system",
+  "compatibility_date": "2023-06-28",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./storybook-static"
+  },
+  "build": {
+    "command": "pnpm run build-storybook"
+  },
+  "route": "staging.design-system.willsnake.dev/*",
+  "vars": {
+    "ENVIRONMENT": "staging"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "route": "design-system.willsnake.dev/*"
+    }
+  }
+}

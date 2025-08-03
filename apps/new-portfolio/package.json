@@ -1,0 +1,32 @@
+{
+  "name": "@ws-portfolio/portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+
+    "deploy": "wrangler deploy",
+    "format": "biome format --write",
+    "format:lint": "biome check --write",
+    "lint": "biome lint --write"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.2.6",
+    "@astrojs/preact": "^4.1.0",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.3.1",
+    "@octokit/core": "^7.0.3",
+    "@tailwindcss/vite": "^4.1.11",
+    "@ws-portfolio/design-system": "workspace:*",
+    "@ws-portfolio/styling": "workspace:*",
+    "astro": "^5.7.12",
+    "preact": "catalog:",
+    "tailwindcss": "catalog:"
+  }
+}

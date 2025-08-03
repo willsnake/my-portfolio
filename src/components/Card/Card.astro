@@ -1,12 +1,9 @@
 ---
-import H3 from "@components/H3/H3.astro";
-import Text from "@components/Text/Text.svelte";
-
 const {
-  title = "Card Title",
-  date = "current",
-  description = "Card Description",
-  classes = "",
+  title = 'Card Title',
+  date = 'current',
+  description = 'Card Description',
+  classes = '',
   row = 1,
   isOdd = true,
 } = Astro.props;
@@ -16,14 +13,14 @@ const oddBallClasses = [];
 const oddTitleClasses = [];
 
 if (isOdd) {
-  oddMainClasses.push("lg:border-l-0");
-  oddMainClasses.push("lg:text-right");
-  oddMainClasses.push("lg:border-r");
-  oddMainClasses.push("lg:ml-[1px]");
+  oddMainClasses.push('lg:border-l-0');
+  oddMainClasses.push('lg:text-right');
+  oddMainClasses.push('lg:border-r');
+  oddMainClasses.push('lg:ml-[1px]');
 
-  oddBallClasses.push("lg:left-[99.2%]");
+  oddBallClasses.push('lg:left-[99.2%]');
 
-  oddTitleClasses.push("lg:right-[30px]");
+  oddTitleClasses.push('lg:right-[30px]');
 }
 ---
 
