@@ -57,6 +57,14 @@ jobs:
               description: 'New Portfolio workflow running...',
               context: 'New Portfolio Build, Test and Deploy'
             });
+      
+      - name: Setup SOPS
+        uses: nhedger/setup-sops@v2
+        with:
+          version: "3.10.2"
+
+      - name: Setup age
+        uses: alessiodionisi/setup-age-action@v1.3.0
 
       - name: Setup Mise
         if: steps.check-changes.outputs.changes == 'true'
@@ -84,6 +92,14 @@ jobs:
           elif [ -f "package.json" ] && grep -q '"lint"' package.json; then
             pnpm lint
           fi
+      
+      - name: Decrypt environment file
+        working-directory: ./apps/new-portfolio
+        run: |
+          echo "${{ secrets.AGE_SECRET_KEY }}" > /tmp/age_key.txt
+          export SOPS_AGE_KEY_FILE=/tmp/age_key.txt
+          sops decrypt --input-type dotenv --output-type dotenv .ci.env > .env
+          rm /tmp/age_key.txt
 
       - uses: cloudflare/wrangler-action@v3
         if: steps.check-changes.outputs.changes == 'true'
