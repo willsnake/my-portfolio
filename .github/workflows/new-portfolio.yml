@@ -59,11 +59,13 @@ jobs:
             });
       
       - name: Setup SOPS
+        if: steps.check-changes.outputs.changes == 'true'
         uses: nhedger/setup-sops@v2
         with:
           version: "3.10.2"
 
       - name: Setup age
+        if: steps.check-changes.outputs.changes == 'true'
         uses: alessiodionisi/setup-age-action@v1.3.0
 
       - name: Setup Mise
@@ -94,6 +96,7 @@ jobs:
           fi
       
       - name: Decrypt environment file
+        if: steps.check-changes.outputs.changes == 'true'
         working-directory: ./apps/new-portfolio
         run: |
           echo "${{ secrets.AGE_SECRET_KEY }}" > /tmp/age_key.txt
