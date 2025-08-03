@@ -98,9 +98,13 @@ jobs:
           workingDirectory: "./apps/new-portfolio"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env="" --minify --upload-source-maps
+          command: 'deploy --env="" --minify --upload-source-maps'
+          secrets: |
+            PUBLIC_GH_TOKEN
           wranglerVersion: "4.22.0"
           packageManager: pnpm
+        env:
+          PUBLIC_GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
           
       # Create GitHub tag and release for the deployment
       - name: Read My Portfolio Version
