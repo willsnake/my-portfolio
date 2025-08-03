@@ -38,7 +38,7 @@ jobs:
           workingDirectory: "./packages/design-system"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env="" --minify --upload-source-maps
+          command: 'deploy --env="" --minify --upload-source-maps'
           wranglerVersion: "4.22.0"
           packageManager: pnpm
           
@@ -70,6 +70,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup SOPS
+        uses: nhedger/setup-sops@v2
+        with:
+          version: "3.10.2"
+
+      - name: Setup age
+        uses: alessiodionisi/setup-age-action@v1.3.0
+
       - name: Setup Mise
         uses: jdx/mise-action@v2
         with:
@@ -88,6 +96,14 @@ jobs:
         working-directory: ./apps/new-portfolio
         run: |
           pnpm format:lint
+
+      - name: Decrypt environment file
+        working-directory: ./apps/new-portfolio
+        run: |
+          echo "${{ secrets.AGE_SECRET_KEY }}" > /tmp/age_key.txt
+          export SOPS_AGE_KEY_FILE=/tmp/age_key.txt
+          sops decrypt --input-type dotenv --output-type dotenv .ci.env > .env
+          rm /tmp/age_key.txt
     
       # Deploy to Cloudflare Workers Staging
       - uses: cloudflare/wrangler-action@v3
@@ -96,12 +112,8 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: 'deploy --env="" --minify --upload-source-maps'
-          secrets: |
-            PUBLIC_GH_TOKEN
           wranglerVersion: "4.22.0"
           packageManager: pnpm
-        env:
-          PUBLIC_GH_TOKEN: ${{ secrets.PUBLIC_GH_TOKEN }}
           
       # Create GitHub tag and release for the deployment
       - name: Read My Portfolio Version
