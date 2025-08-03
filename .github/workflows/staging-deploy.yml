@@ -87,6 +87,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+      
+      - name: Build Design System
+        run: pnpm --filter '@ws-portfolio/design-system' build
 
       - name: Build Design System
         run: pnpm --filter '@ws-portfolio/design-system' build

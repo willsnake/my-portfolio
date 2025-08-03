@@ -79,7 +79,7 @@ jobs:
       - name: Install dependencies
         if: steps.check-changes.outputs.changes == 'true'
         run: pnpm install
-
+      
       - name: Build Design System
         if: steps.check-changes.outputs.changes == 'true'
         run: pnpm --filter '@ws-portfolio/design-system' build
@@ -103,6 +103,7 @@ jobs:
           export SOPS_AGE_KEY_FILE=/tmp/age_key.txt
           sops decrypt --input-type dotenv --output-type dotenv .ci.env > .env
           rm /tmp/age_key.txt
+
 
       - uses: cloudflare/wrangler-action@v3
         if: steps.check-changes.outputs.changes == 'true'
