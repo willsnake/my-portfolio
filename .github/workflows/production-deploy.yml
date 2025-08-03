@@ -96,10 +96,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # Build the application
-      - name: Build New Portfolio
-        working-directory: ./apps/new-portfolio
-        run: pnpm build
+      - name: Build Design System
+        run: pnpm --filter '@ws-portfolio/design-system' build
     
       # Deploy to Cloudflare Pages Production
       - uses: cloudflare/wrangler-action@v3
@@ -107,6 +105,6 @@ jobs:
           workingDirectory: "./apps/new-portfolio"
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=new-portfolio --env production
+          command: deploy --env production --minify --upload-source-maps
           wranglerVersion: "4.22.0"
           packageManager: pnpm
