@@ -83,6 +83,9 @@ jobs:
       - name: Build Design System
         run: pnpm --filter '@ws-portfolio/design-system' build
 
+      - name: Build Design System
+        run: pnpm --filter '@ws-portfolio/design-system' build
+
       # Run linting and testing
       - name: Lint and Test My Portfolio
         working-directory: ./apps/new-portfolio
