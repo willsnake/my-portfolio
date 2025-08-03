@@ -6,9 +6,37 @@ on:
       - main
 
 jobs:
+  detect-changes:
+    name: Detect Changed Packages
+    runs-on: ubuntu-latest
+    outputs:
+      design-system: ${{ steps.filter.outputs.design-system }}
+      new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Filter for changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            design-system:
+              - 'packages/design-system/**'
+            new-portfolio:
+              - 'apps/new-portfolio/**'
+            fonts:
+              - 'packages/fonts/**'
+            styling:
+              - 'packages/styling/**'
+
   deploy-design-system:
     name: Deploy Design System to Production
     runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.design-system == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,5 +74,39 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy --env production --minify --upload-source-maps
+          wranglerVersion: "4.22.0"
+          packageManager: pnpm
+
+  deploy-new-portfolio:
+    name: Deploy New Portfolio to Production
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.new-portfolio == 'true'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # Build the application
+      - name: Build New Portfolio
+        working-directory: ./apps/new-portfolio
+        run: pnpm build
+    
+      # Deploy to Cloudflare Pages Production
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          workingDirectory: "./apps/new-portfolio"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=new-portfolio --env production
           wranglerVersion: "4.22.0"
           packageManager: pnpm
