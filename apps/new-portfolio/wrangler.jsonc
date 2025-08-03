@@ -1,0 +1,23 @@
+{
+  "name": "willsnake-my-portfolio",
+  "compatibility_date": "2023-06-28",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./dist"
+  },
+  "build": {
+    "command": "pnpm run build"
+  },
+  "route": "staging.willsnake.dev/*",
+  "vars": {
+    "ENVIRONMENT": "staging"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      },
+      "route": "production.willsnake.dev/*"
+    }
+  }
+}

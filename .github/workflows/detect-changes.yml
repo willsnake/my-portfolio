@@ -11,6 +11,8 @@ jobs:
     outputs:
       design-system: ${{ steps.filter.outputs.design-system }}
       new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+      fonts: ${{ steps.filter.outputs.fonts }}
+      styling: ${{ steps.filter.outputs.styling }}
       
     steps:
       - uses: actions/checkout@v4
@@ -24,12 +26,16 @@ jobs:
           filters: |
             design-system:
               - 'packages/design-system/**'
-              - 'pnpm-lock.yaml'
               - '.github/workflows/design-system.yml'
             new-portfolio:
               - 'apps/new-portfolio/**'
-              - 'pnpm-lock.yaml'
               - '.github/workflows/new-portfolio.yml'
+            fonts:
+              - 'packages/fonts/**'
+              - '.github/workflows/fonts.yml'
+            styling:
+              - 'packages/styling/**'
+              - '.github/workflows/styling.yml'
               
       # Save PR info for use in dependent workflows
       - name: Save PR Data
@@ -40,6 +46,8 @@ jobs:
           echo "PR_BASE_REF=${{ github.event.pull_request.base.ref }}" >> pr.json
           echo "DESIGN_SYSTEM_CHANGED=${{ steps.filter.outputs.design-system }}" >> pr.json
           echo "NEW_PORTFOLIO_CHANGED=${{ steps.filter.outputs.new-portfolio }}" >> pr.json
+          echo "FONTS_CHANGED=${{ steps.filter.outputs.fonts }}" >> pr.json
+          echo "STYLING_CHANGED=${{ steps.filter.outputs.styling }}" >> pr.json
           echo "GITHUB_SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)" >> pr.json
           
       - name: Upload PR Data

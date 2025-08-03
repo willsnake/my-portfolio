@@ -1,4 +1,4 @@
-name: Version Bump (Stable)
+name: Version Stable Release
 
 on:
   push:
@@ -12,6 +12,9 @@ jobs:
     outputs:
       design-system: ${{ steps.filter.outputs.design-system }}
       new-portfolio: ${{ steps.filter.outputs.new-portfolio }}
+      fonts: ${{ steps.filter.outputs.fonts }}
+      styling: ${{ steps.filter.outputs.styling }}
+      any-changes: ${{ steps.check-any.outputs.any-changes }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,15 +30,32 @@ jobs:
               - 'packages/design-system/**'
             new-portfolio:
               - 'apps/new-portfolio/**'
+            fonts:
+              - 'packages/fonts/**'
+            styling:
+              - 'packages/styling/**'
 
-  version-bump:
-    name: Version Bump with Changesets (Stable)
+      - name: Check if any package changed
+        id: check-any
+        run: |
+          if [ "${{ steps.filter.outputs.design-system }}" = "true" ] || \
+             [ "${{ steps.filter.outputs.new-portfolio }}" = "true" ] || \
+             [ "${{ steps.filter.outputs.fonts }}" = "true" ] || \
+             [ "${{ steps.filter.outputs.styling }}" = "true" ]; then
+            echo "any-changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "any-changes=false" >> $GITHUB_OUTPUT
+          fi
+
+  version-release:
+    name: Version and Release Changed Packages
     needs: detect-changes
-    if: ${{ needs.detect-changes.outputs.design-system == 'true' || needs.detect-changes.outputs.new-portfolio == 'true' }}
+    if: needs.detect-changes.outputs.any-changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -50,41 +70,58 @@ jobs:
           cache: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
-      - name: Setup Git User
-        run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-      - name: Exit Pre-release Mode (if needed)
-        run: pnpm changeset pre exit
-
-      - name: Create Stable Version Pull Request
+      - name: Create Release Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
-          commit: "chore: version packages (stable)"
-          title: "chore: version packages (stable)"
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+          title: "Release: Version Packages"
+          commit: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Output Version Changes
-        if: steps.changesets.outputs.hasChangesets == 'true'
+      - name: Create GitHub Releases
+        if: steps.changesets.outputs.published == 'true'
         run: |
-          echo "✅ Pull Request created with stable version changes!"
-          echo "Updated packages: ${{ steps.changesets.outputs.publishedPackages }}"
+          # Parse published packages and create GitHub releases
+          echo '${{ steps.changesets.outputs.publishedPackages }}' | jq -r '.[] | "\(.name)@\(.version)"' | while read package; do
+            name=$(echo $package | cut -d'@' -f1)
+            version=$(echo $package | cut -d'@' -f2)
+            
+            # Create a GitHub release for each published package
+            gh release create "${name}-v${version}" \
+              --title "${name} v${version}" \
+              --notes "Release of ${name} version ${version}" \
+              --target main
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Production Deployments
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          echo "Packages published, production deployments will be triggered by the production-deploy.yml workflow"
+
+  # Trigger production deployment after versioning
+  trigger-production-deploy:
+    name: Trigger Production Deployment
+    needs: [detect-changes, version-release]
+    if: always() && needs.detect-changes.outputs.any-changes == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: production-deploy
+          client-payload: |
+            {
+              "design-system": "${{ needs.detect-changes.outputs.design-system }}",
+              "new-portfolio": "${{ needs.detect-changes.outputs.new-portfolio }}",
+              "fonts": "${{ needs.detect-changes.outputs.fonts }}",
+              "styling": "${{ needs.detect-changes.outputs.styling }}"
+            }

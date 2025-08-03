@@ -62,3 +62,58 @@ jobs:
             Date: $(date +'%Y-%m-%d %H:%M:%S')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-my-portfolio:
+    name: Deploy My Portfolio to Staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Mise
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # Run linting and testing
+      - name: Lint and Test My Portfolio
+        working-directory: ./apps/new-portfolio
+        run: |
+          pnpm format:lint
+    
+      # Deploy to Cloudflare Workers Staging
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          workingDirectory: "./apps/new-portfolio"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --env="" --minify --upload-source-maps
+          wranglerVersion: "4.22.0"
+          packageManager: pnpm
+          
+      # Create GitHub tag and release for the deployment
+      - name: Read My Portfolio Version
+        id: mp-version
+        run: |
+          VERSION=$(jq -r .version ./apps/new-portfolio/package.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          
+      - name: Create GitHub Tag and Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "My Portfolio v${{ steps.mp-version.outputs.version }} (Staging)"
+          tag_name: "mp-v${{ steps.mp-version.outputs.version }}"
+          draft: false
+          prerelease: true
+          generate_release_notes: true
+          body: |
+            Automatic deployment to My Portfolio staging v${{ steps.mp-version.outputs.version }}.
+            Date: $(date +'%Y-%m-%d %H:%M:%S')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+  

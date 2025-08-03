@@ -1,0 +1,168 @@
+name: New Portfolio Workflow
+
+on:
+  workflow_run:
+    workflows: [Detect Changes]
+    types:
+      - completed
+
+jobs:
+  new-portfolio:
+    name: New Portfolio Build, Test and Deploy
+    runs-on: ubuntu-latest
+    # Only run when detect-changes workflow triggers it and new-portfolio changes detected
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Download workflow artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: detect-changes.yml
+          run_id: ${{ github.event.workflow_run.id }}
+          name: pr-data
+          path: .
+
+      - name: Set PR data
+        run: cat pr.json >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.PR_HEAD_REF }}
+
+      # Check if new-portfolio changes were detected
+      - name: Check if new-portfolio changed
+        id: check-changes
+        run: |
+          if [ "${{ env.NEW_PORTFOLIO_CHANGED }}" = "true" ]; then
+            echo "New Portfolio changes detected!"
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No New Portfolio changes detected, skipping workflow"
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+      
+      # Report pending status at start
+      - name: Report pending status
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'pending',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'New Portfolio workflow running...',
+              context: 'New Portfolio Build, Test and Deploy'
+            });
+
+      - name: Setup Mise
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        if: steps.check-changes.outputs.changes == 'true'
+        run: pnpm install
+
+      # Run linting and formatting
+      - name: Format and Lint New Portfolio
+        if: steps.check-changes.outputs.changes == 'true'
+        working-directory: ./apps/new-portfolio
+        run: |
+          if [ -f "package.json" ] && grep -q '"format:lint"' package.json; then
+            pnpm format:lint
+          elif [ -f "package.json" ] && grep -q '"lint"' package.json; then
+            pnpm lint
+          fi
+
+      - uses: cloudflare/wrangler-action@v3
+        if: steps.check-changes.outputs.changes == 'true'
+        id: version-upload
+        with:
+          workingDirectory: "./apps/new-portfolio"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload -e="" --tag="${{ env.GITHUB_SHORT_SHA }}"
+          wranglerVersion: "4.22.0"
+          packageManager: pnpm
+          
+      # Check if a comment already exists
+      - name: Find comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          comment-author: 'github-actions[bot]'
+          body-includes: 'New Portfolio Preview'
+
+      # Create a new comment if one doesn't exist
+      - name: Create comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ env.PR_NUMBER }}
+          body: |
+            ### New Portfolio Preview
+            
+            ✅ New Portfolio has been deployed to Cloudflare Pages.
+            
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
+            
+            This comment will be updated when the preview is redeployed.
+
+      # Update an existing comment
+      - name: Update comment
+        if: steps.check-changes.outputs.changes == 'true' && steps.version-upload.outputs.deployment-url && steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          edit-mode: replace
+          body: |
+            ### New Portfolio Preview
+            
+            ✅ New Portfolio has been redeployed to Cloudflare Pages.
+            
+            🔗 Preview URL: ${{ steps.version-upload.outputs.deployment-url }}
+            
+            Last updated: ${{ github.event.workflow_run.updated_at }}
+
+      # Report success status to PR
+      - name: Report success status
+        if: steps.check-changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'success',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'New Portfolio build and deploy completed',
+              context: 'New Portfolio Build, Test and Deploy'
+            });
+      
+      # Report failure status if job fails
+      - name: Report failure status
+        if: failure() && steps.check-changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ github.event.workflow_run.head_sha }}';
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: sha,
+              state: 'failure',
+              target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              description: 'New Portfolio build or deploy failed',
+              context: 'New Portfolio Build, Test and Deploy'
+            });
