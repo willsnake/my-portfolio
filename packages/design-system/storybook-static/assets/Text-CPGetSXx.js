@@ -1,1 +1,0 @@
-import{u as e,c}from"./cv-DPf2FYxQ.js";const n=({variant:a="primary",className:r="",children:t,...s})=>{const o=c({base:"font-normal text-base",variants:{color:{primary:"text-gray",secondary:"text-lightest-gray"}},defaultVariants:{color:"primary"}});return e("p",{...s,class:o({color:a,className:r}),"data-variant":a,children:t})};export{n as T};
