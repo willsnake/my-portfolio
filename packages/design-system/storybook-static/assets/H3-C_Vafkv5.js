@@ -1,1 +1,0 @@
-import{c as s,u as c}from"./cv-DPf2FYxQ.js";const m=({variant:r="primary",className:t="",children:a,...o})=>{const e=s({base:"font-ibm-plex-mono font-medium text-xl",variants:{color:{primary:"text-white",secondary:"text-dark-blue",tertiary:"text-dark-gray"}},defaultVariants:{color:"primary"}});return c("h3",{...o,class:e({color:r,className:t}),children:a})};export{m as H};
