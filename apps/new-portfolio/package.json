@@ -1,5 +1,6 @@
 {
   "name": "@ws-portfolio/portfolio",
+  "description": "A modern portfolio website built with Astro, featuring a blog, project showcase, and professional experience sections. Integrates with the custom design system and utilizes Preact components for interactive elements.",
   "type": "module",
   "version": "0.0.1",
   "files": [
