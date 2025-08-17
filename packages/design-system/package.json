@@ -1,5 +1,6 @@
 {
   "name": "@ws-portfolio/design-system",
+  "description": "A comprehensive design system built with Preact and TypeScript, featuring reusable UI components with Tailwind CSS styling and Storybook documentation.",
   "private": true,
   "version": "0.0.1",
   "type": "module",
