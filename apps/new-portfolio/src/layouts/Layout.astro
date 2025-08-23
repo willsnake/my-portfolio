@@ -1,6 +1,24 @@
 ---
 import '@styles/global.css';
 
+import { SEO, type TwitterCardType } from 'astro-seo';
+
+const seoConfig = {
+  baseURL: 'https://willsnake.dev',
+  description: "Hi, I'm WillSnake! I'm a Senior Software Engineer.",
+  type: 'website',
+  image: {
+    url: 'https://production.willsnake.dev/assets/hero-img.webp',
+    alt: 'A photo of WillSnake lookig at the computer',
+    width: 1200,
+    height: 630,
+  },
+  siteName: 'WillSnake Dev Portfolio',
+  twitter: {
+    card: 'summary_large_image',
+  },
+};
+
 // Props
 export interface Props {
   /** Title of the page. */
@@ -17,12 +35,38 @@ export interface Props {
   /** Whether or not to disable indexing */
   disableIndexing?: boolean;
 }
-// const { title, ogTitle, description, image, disableIndexing = false } = Astro.props as Props;
+const { title, ogTitle, description, image = { url: '', alt: '' }, disableIndexing = false } = Astro.props as Props;
 ---
 
 <!doctype html>
 <html lang="es" class="motion-safe:scroll-smooth">
   <head>
+    <SEO
+      title={title}
+      description={seoConfig.description || description}
+      noindex={disableIndexing}
+      nofollow={disableIndexing}
+      openGraph={{
+        basic: {
+          title: ogTitle || title,
+          type: "website",
+          image: seoConfig.image.url || image.url,
+        },
+        image: {
+          width: seoConfig.image.width,
+          height: seoConfig.image.height,
+          alt: seoConfig.image.alt || image.alt,
+        },
+        optional: {
+          siteName: seoConfig.siteName,
+          description: seoConfig.description || description,
+        },
+      }}
+      twitter={{
+        card: seoConfig.twitter.card as TwitterCardType,
+      }}
+    />
+
     <!-- Global meta tags. -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
