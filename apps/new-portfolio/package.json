@@ -11,7 +11,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-
     "deploy": "wrangler deploy",
     "format": "biome format --write",
     "format:lint": "biome check --write",
@@ -27,6 +26,7 @@
     "@ws-portfolio/design-system": "workspace:*",
     "@ws-portfolio/styling": "workspace:*",
     "astro": "^5.7.12",
+    "astro-seo": "^0.8.4",
     "preact": "catalog:",
     "tailwindcss": "catalog:"
   }
