@@ -1,6 +1,7 @@
 ---
 import '@styles/global.css';
 
+import Posthog from '@components/Posthog.astro';
 import { SEO, type TwitterCardType } from 'astro-seo';
 
 const seoConfig = {
@@ -158,6 +159,7 @@ const { title, ogTitle, description, image = { url: '', alt: '' }, disableIndexi
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
     ></script>
+    <Posthog />
 
     <!-- Service worker registration. -->
 
