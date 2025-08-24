@@ -35,9 +35,20 @@ const { heroImage = '/hero-img.webp' } = Astro.props as Props;
           variant="primary"
           style="margin-right: 6px;"
           text="Contact me"
+          id="contact-btn"
         />
-        <Button variant="secondary" text="Download Resume" />
+        <Button variant="secondary" text="Download Resume" id="resume-btn" />
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  document.getElementById('contact-btn')?.addEventListener('click', () => {
+    posthog.capture('Contact_Button_Clicked')
+  });
+
+  document.getElementById('resume-btn')?.addEventListener('click', () => {
+    posthog.capture('Resume_Button_Clicked')
+  });
+</script>
